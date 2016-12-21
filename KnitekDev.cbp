@@ -40,6 +40,13 @@
 		<Linker>
 			<Add directory="D:/Biblioteki/SFML-2.4.1/lib" />
 		</Linker>
+		<Unit filename="game.cpp" />
+		<Unit filename="game.hpp" />
+		<Unit filename="game_state.hpp" />
+		<Unit filename="game_state_playgame.cpp" />
+		<Unit filename="game_state_playgame.hpp" />
+		<Unit filename="game_state_startmenu.cpp" />
+		<Unit filename="game_state_startmenu.hpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

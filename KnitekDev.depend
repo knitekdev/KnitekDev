@@ -1,6 +1,7 @@
 # depslib dependency file v1.0
-1482248150 source:d:\projekty\knitekdev\main.cpp
-	<SFML/Graphics.hpp>
+1482348977 source:d:\projekty\knitekdev\main.cpp
+	"game.hpp"
+	"game_state_startmenu.hpp"
 
 1470639234 d:\biblioteki\sfml-2.4.1\include\sfml\graphics.hpp
 	<SFML/Window.hpp>
@@ -389,4 +390,50 @@
 	<SFML/System/String.hpp>
 	<string>
 	<vector>
+
+1482359822 source:d:\projekty\knitekdev\game.cpp
+	<stack>
+	<SFML/Graphics.hpp>
+	<SFML/System.hpp>
+	"game.hpp"
+	"game_state.hpp"
+	"texture_manager.hpp"
+
+1482358595 d:\projekty\knitekdev\game.hpp
+	<stack>
+	<SFML/Graphics.hpp>
+	"texture_manager.hpp"
+
+1482358028 d:\projekty\knitekdev\texture_manager.hpp
+	<SFML/Graphics.hpp>
+	<string>
+	<map>
+
+1482328673 d:\projekty\knitekdev\game_state.hpp
+	"game.hpp"
+
+1482359913 source:d:\projekty\knitekdev\game_state_playgame.cpp
+	<SFML/Graphics.hpp>
+	"game_state.hpp"
+	"game_state_playgame.hpp"
+
+1482346985 d:\projekty\knitekdev\game_state_playgame.hpp
+	<SFML/Graphics.hpp>
+	"game_state.hpp"
+
+1482358724 d:\projekty\knitekdev\game_state_startmenu.hpp
+	<SFML/Graphics.hpp>
+	"game_state.hpp"
+
+1482359873 source:d:\projekty\knitekdev\texture_manager.cpp
+	<SFML/Graphics.hpp>
+	<map>
+	<string>
+	"texture_manager.hpp"
+
+1482359334 source:d:\projekty\knitekdev\game_state_startmenu.cpp
+	<SFML/Graphics.hpp>
+	"game_state_startmenu.hpp"
+	"game_state_playgame.hpp"
+	"game_state.hpp"
 
