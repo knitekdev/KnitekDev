@@ -48,6 +48,8 @@
 		<Unit filename="game_state_startmenu.cpp" />
 		<Unit filename="game_state_startmenu.hpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="texture_manager.cpp" />
+		<Unit filename="texture_manager.hpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

@@ -7,6 +7,7 @@
 #include "game_state.hpp"
 #include "texture_manager.hpp"
 
+
 Game::Game()
 {
     this->loadTextures();
@@ -30,9 +31,8 @@ void Game::pushState(GameState* state)
 
 void Game::popState()
 {
-    delete this->states.top();
+//    delete this->states.top();
     this->states.pop();
-
     return;
 }
 

@@ -4,6 +4,7 @@
 #include "game_state_playgame.hpp"
 #include "game_state.hpp"
 
+
 GameStateStartMenu::GameStateStartMenu(Game* game)
 {
     this->game = game;
@@ -24,7 +25,7 @@ void GameStateStartMenu::draw(const float dt)
 
 void GameStateStartMenu::update(const float dt)
 {
-
+    return;
 }
 
 void GameStateStartMenu::handleInput()

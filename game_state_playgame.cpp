@@ -17,7 +17,7 @@ GameStatePlayGame::GameStatePlayGame(Game* game)
 void GameStatePlayGame::draw(const float dt)
 {
     this->game->window.clear(sf::Color::Black);
-    //this->game->window.draw(this->game->background);
+//    this->game->window.draw(this->game->background);
 
     return;
 }

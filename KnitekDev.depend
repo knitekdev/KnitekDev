@@ -391,7 +391,7 @@
 	<string>
 	<vector>
 
-1482359822 source:d:\projekty\knitekdev\game.cpp
+1482404734 source:d:\projekty\knitekdev\game.cpp
 	<stack>
 	<SFML/Graphics.hpp>
 	<SFML/System.hpp>
@@ -412,10 +412,11 @@
 1482328673 d:\projekty\knitekdev\game_state.hpp
 	"game.hpp"
 
-1482359913 source:d:\projekty\knitekdev\game_state_playgame.cpp
+1482404614 source:d:\projekty\knitekdev\game_state_playgame.cpp
 	<SFML/Graphics.hpp>
 	"game_state.hpp"
 	"game_state_playgame.hpp"
+	<iostream>
 
 1482346985 d:\projekty\knitekdev\game_state_playgame.hpp
 	<SFML/Graphics.hpp>
@@ -431,9 +432,19 @@
 	<string>
 	"texture_manager.hpp"
 
-1482359334 source:d:\projekty\knitekdev\game_state_startmenu.cpp
+1482403196 source:d:\projekty\knitekdev\game_state_startmenu.cpp
 	<SFML/Graphics.hpp>
 	"game_state_startmenu.hpp"
 	"game_state_playgame.hpp"
 	"game_state.hpp"
+	<iostream>
+
+1482400982 source:d:\projekty\knitekdev\animation_handler.cpp
+	<SFML/Graphics.hpp>
+	<vector>
+	"animation_handler.hpp"
+
+1482401285 d:\projekty\knitekdev\animation_handler.hpp
+	<SFML/Graphics.hpp>
+	<vector>
 
