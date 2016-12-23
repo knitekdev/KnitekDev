@@ -40,6 +40,8 @@
 		<Linker>
 			<Add directory="D:/Biblioteki/SFML-2.4.1/lib" />
 		</Linker>
+		<Unit filename="animation_handler.cpp" />
+		<Unit filename="animation_handler.hpp" />
 		<Unit filename="game.cpp" />
 		<Unit filename="game.hpp" />
 		<Unit filename="game_state.hpp" />
@@ -48,6 +50,8 @@
 		<Unit filename="game_state_startmenu.cpp" />
 		<Unit filename="game_state_startmenu.hpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="menu_gui.cpp" />
+		<Unit filename="menu_gui.hpp" />
 		<Unit filename="texture_manager.cpp" />
 		<Unit filename="texture_manager.hpp" />
 		<Extensions>
