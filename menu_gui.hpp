@@ -20,6 +20,7 @@ class GuiMenu : public sf::Transformable, public sf::Drawable
 {
 public:
     sf::Font font;
+    bool authors;
     std::vector<Button> buttons;
 
     void start(sf::RenderWindow& window);

@@ -1,7 +1,8 @@
 # depslib dependency file v1.0
-1482348977 source:d:\projekty\knitekdev\main.cpp
+1482442229 source:d:\projekty\knitekdev\main.cpp
 	"game.hpp"
 	"game_state_startmenu.hpp"
+	<locale>
 
 1470639234 d:\biblioteki\sfml-2.4.1\include\sfml\graphics.hpp
 	<SFML/Window.hpp>
@@ -432,7 +433,7 @@
 	<string>
 	"texture_manager.hpp"
 
-1482441079 source:d:\projekty\knitekdev\game_state_startmenu.cpp
+1482510262 source:d:\projekty\knitekdev\game_state_startmenu.cpp
 	<SFML/Graphics.hpp>
 	"game_state_startmenu.hpp"
 	"game_state_playgame.hpp"
@@ -449,12 +450,12 @@
 	<SFML/Graphics.hpp>
 	<vector>
 
-1482440949 d:\projekty\knitekdev\menu_gui.hpp
+1482508692 d:\projekty\knitekdev\menu_gui.hpp
 	<SFML/Graphics.hpp>
 	<vector>
 	<string>
 
-1482441397 source:d:\projekty\knitekdev\menu_gui.cpp
+1482510315 source:d:\projekty\knitekdev\menu_gui.cpp
 	<SFML/Graphics.hpp>
 	<vector>
 	<string>

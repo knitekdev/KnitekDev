@@ -38,6 +38,7 @@ void GameStateStartMenu::handleInput()
 
     while(this->game->window.pollEvent(event))
     {
+        sf::Vector2f mousePos = this->game->window.mapPixelToCoords(sf::Mouse::getPosition(this->game->window));
         switch(event.type)
         {
         case sf::Event::Closed:
@@ -57,18 +58,28 @@ void GameStateStartMenu::handleInput()
         case sf::Event::KeyPressed:
             {
                 if(event.key.code == sf::Keyboard::Escape) this->game->window.close();
-                else if(event.key.code == sf::Keyboard::Space) this->loadgame();
+//                else if(event.key.code == sf::Keyboard::Space) this->loadgame();
+                break;
+            }
+        case sf::Event::MouseMoved:
+            {
+                this->guiMenu.check(mousePos);
                 break;
             }
         case sf::Event::MouseButtonPressed:
             {
                 if(event.mouseButton.button == sf::Mouse::Left)
                 {
-                    sf::Vector2f mousePos = this->game->window.mapPixelToCoords(sf::Mouse::getPosition(this->game->window));
+
                     std::string message = this->guiMenu.check(mousePos);
+
                     if(message == "new_game") this->loadgame();
+//                    else if(message == "load_game");
+                    else if(message == "authors" ){this->guiMenu.authors= this->guiMenu.authors ? false : true; break;}
+                    else if(message == "exit") this->game->window.close();
+                    this->guiMenu.authors = false;
                 }
-                return;
+                break;
             }
         default:
             break;
