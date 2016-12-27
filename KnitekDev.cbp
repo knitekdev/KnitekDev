@@ -11,6 +11,9 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="mingw_610_32-bit" />
+				<Compiler>
+					<Add option="-Wextra" />
+				</Compiler>
 				<Linker>
 					<Add library="sfml-audio-d" />
 					<Add library="sfml-graphics-d" />
@@ -49,9 +52,13 @@
 		<Unit filename="game_state_playgame.hpp" />
 		<Unit filename="game_state_startmenu.cpp" />
 		<Unit filename="game_state_startmenu.hpp" />
+		<Unit filename="level_map.cpp" />
+		<Unit filename="level_map.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="menu_gui.cpp" />
 		<Unit filename="menu_gui.hpp" />
+		<Unit filename="player.cpp" />
+		<Unit filename="player.hpp" />
 		<Unit filename="texture_manager.cpp" />
 		<Unit filename="texture_manager.hpp" />
 		<Extensions>

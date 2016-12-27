@@ -3,7 +3,6 @@
 
 #include <stack>
 #include <SFML/Graphics.hpp>
-
 #include "texture_manager.hpp"
 
 class GameState;
