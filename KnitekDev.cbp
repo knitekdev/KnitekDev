@@ -26,7 +26,11 @@
 				<Option object_output="obj/Release/" />
 				<Option type="0" />
 				<Option compiler="mingw_610_32-bit" />
+				<Compiler>
+					<Add option="-Wextra" />
+				</Compiler>
 				<Linker>
+					<Add option="-static-libstdc++" />
 					<Add library="sfml-audio" />
 					<Add library="sfml-graphics" />
 					<Add library="sfml-window" />

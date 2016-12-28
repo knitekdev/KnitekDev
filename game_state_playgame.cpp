@@ -8,7 +8,6 @@
 #include <fstream>
 #include <string>
 
-
 GameStatePlayGame::GameStatePlayGame(Game* game)
 {
     this->game = game;
@@ -42,10 +41,10 @@ void GameStatePlayGame::draw(const float dt)
 
 void GameStatePlayGame::update(const float dt)
 {
+    if(player.sprite.getPosition().y > 730)this->game->popState();
     levelMap.update(dt);
     player.update(dt);
-
-
+    player.makeMove(levelMap.collision(player.sprite,player.velocity));
     return;
 }
 
@@ -75,17 +74,18 @@ void GameStatePlayGame::handleInput()
 //            }
         case sf::Event::KeyPressed:
             {
-                if(event.key.code == sf::Keyboard::A) player.turn(LEFT);
-                else if(event.key.code == sf::Keyboard::D) player.turn(RIGHT);
-                else if(event.key.code == sf::Keyboard::Space) player.jump();
+                if(event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::Left) player.turn(LEFT);
+                else if(event.key.code == sf::Keyboard::D || event.key.code == sf::Keyboard::Right) player.turn(RIGHT);
+                else if(event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::Up) player.jump();
+                else if(event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::Down) player.sprite.move(0,1);
 
                 if(event.key.code == sf::Keyboard::Escape) this->game->popState();
                 break;
             }
         case sf::Event::KeyReleased:
             {
-                if(event.key.code == sf::Keyboard::A) if(player.playerState == LEFT) player.turn(STAND);
-                if(event.key.code == sf::Keyboard::D) if(player.playerState == RIGHT) player.turn(STAND);
+                if(event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::Left) if(player.playerState == LEFT) player.turn(STAND);
+                if(event.key.code == sf::Keyboard::D || event.key.code == sf::Keyboard::Right) if(player.playerState == RIGHT) player.turn(STAND);
                 break;
             }
         default:
@@ -112,7 +112,7 @@ void GameStatePlayGame::loadLevel(const unsigned int number)
     }
     plik.close();
 
-    name = "data\\level\\map_level_"+nr+".dat";
+    name = "data\\level\\map_level_"+ nr +".dat";
     plik.open(name,std::ios::in);
     int objectnumber,x,y,width,height,animationnumber,framestart,frameend,type,variant;
 
@@ -138,6 +138,19 @@ void GameStatePlayGame::loadLevel(const unsigned int number)
         plik>>type;
         plik>>variant;
         levelMap.addObject(Object(sf::Vector2f((float)x,(float)y),width,height,texmgr.getRef(tmp),animations,(ObjectType)type,variant));
+        if(type==PLATFORM)levelMap.addPlatform(sf::FloatRect(sf::Vector2f(x,y),sf::Vector2f(width,height)));
     }
     plik.close();
+
+//    plik.open("data\\level\\platform_level_"+nr+".dat");
+//    plik>>objectnumber;
+//    for(int i = 0; i<objectnumber; i++)
+//    {
+//        plik>>x;
+//        plik>>y;
+//        plik>>width;
+//        plik>>height;
+//        levelMap.addPlatform( sf::FloatRect(sf::Vector2f(x,y),sf::Vector2f(width,height)) );
+//    }
+//    plik.close();
 }

@@ -6,7 +6,7 @@ void Player::setStats(const unsigned int health, const unsigned int damage,
 {
     this->playerState = STAND;
     this->speed = 8;
-    this->jumpPower = -6;
+    this->jumpPower = -8;
     this->velocity = sf::Vector2f(0,0);
     this->health = health;
     this->damage = damage;
@@ -19,6 +19,15 @@ void Player::setStats(const unsigned int health, const unsigned int damage,
     this->animHandler.update(0.0f);
 }
 
+void Player::makeMove(bool collision)
+{
+    if(!collision)
+    {
+        sprite.move(velocity);
+    }
+
+}
+
 void Player::turn(PlayerState ps)
 {
     this->playerState = ps;
@@ -29,7 +38,6 @@ void Player::jump()
     if(velocity.y == 0.0f)
     {
         velocity.y +=jumpPower;
-        std::cout<<"jump"<<velocity.y;
     }
 
 }
@@ -41,6 +49,11 @@ void Player::draw(sf::RenderWindow& window, float dt)
     this->sprite.setTextureRect(this->animHandler.bounds);
     window.draw(this->sprite);
     return;
+}
+
+sf::FloatRect Player::getRect()
+{
+    return this->sprite.getGlobalBounds();
 }
 
 void Player::update(float dt)
@@ -66,5 +79,5 @@ void Player::update(float dt)
             break;
         }
     }
-    velocity.y +=speed * 1.5f * dt;
+    velocity.y +=speed * 2.5f * dt;
 }

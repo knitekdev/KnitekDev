@@ -35,8 +35,11 @@ class LevelMap
 {
 public:
     std::vector<Object> objectList;
+    std::vector<sf::FloatRect> platformList;
     void update(float dt);
     void draw(sf::RenderWindow& window, float dt);
     void addObject(Object object);
+    void addPlatform(sf::FloatRect platform);
+    bool collision(sf::Sprite& object,sf::Vector2f& velocity);
 };
 #endif // LEVEL_MAP_HPP

@@ -26,6 +26,8 @@ public:
     void draw(sf::RenderWindow& window, float dt);
     void turn(PlayerState pS);
     void jump();
+    void makeMove(bool collision);
+    sf::FloatRect getRect();
 
 };
 #endif // PLAYER_HPP
