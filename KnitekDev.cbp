@@ -57,6 +57,8 @@
 		<Unit filename="game_state_playgame.hpp" />
 		<Unit filename="game_state_startmenu.cpp" />
 		<Unit filename="game_state_startmenu.hpp" />
+		<Unit filename="hit_list.cpp" />
+		<Unit filename="hit_list.hpp" />
 		<Unit filename="level_map.cpp" />
 		<Unit filename="level_map.hpp" />
 		<Unit filename="main.cpp" />
