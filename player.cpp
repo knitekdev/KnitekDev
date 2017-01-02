@@ -42,12 +42,13 @@ void Player::jump()
 
 }
 
-void Player::draw(sf::RenderWindow& window, float dt)
+void Player::draw(sf::RenderWindow& window,const float dt)
 {
     this->animHandler.changeAnim(this->playerState);
     this->animHandler.update(dt);
     this->sprite.setTextureRect(this->animHandler.bounds);
     window.draw(this->sprite);
+    hitList.draw(window);
     return;
 }
 
@@ -56,7 +57,7 @@ sf::FloatRect Player::getRect()
     return this->sprite.getGlobalBounds();
 }
 
-void Player::update(float dt)
+void Player::update(const float dt)
 {
     float turnboost = 6;
     switch(playerState)
@@ -80,4 +81,15 @@ void Player::update(float dt)
         }
     }
     velocity.y +=speed * 2.5f * dt;
+    hitList.update(dt);
+}
+
+void Player::getHit(const int& ammout)
+{
+    if(ammout<0)
+    hitList.addHit(sf::Vector2f(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width/2,
+                                sprite.getGlobalBounds().top),ammout,sf::Color::Red);
+    else
+    hitList.addHit(sf::Vector2f(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width/2,
+                                sprite.getGlobalBounds().top),ammout,sf::Color::Green);
 }

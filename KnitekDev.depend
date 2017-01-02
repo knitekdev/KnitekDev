@@ -1,8 +1,9 @@
 # depslib dependency file v1.0
-1482442229 source:d:\projekty\knitekdev\main.cpp
+1483336346 source:d:\projekty\knitekdev\main.cpp
 	"game.hpp"
 	"game_state_startmenu.hpp"
 	<locale>
+	<iostream>
 
 1470639234 d:\biblioteki\sfml-2.4.1\include\sfml\graphics.hpp
 	<SFML/Window.hpp>
@@ -392,7 +393,7 @@
 	<string>
 	<vector>
 
-1482404734 source:d:\projekty\knitekdev\game.cpp
+1483336373 source:d:\projekty\knitekdev\game.cpp
 	<stack>
 	<SFML/Graphics.hpp>
 	<SFML/System.hpp>
@@ -400,7 +401,7 @@
 	"game_state.hpp"
 	"texture_manager.hpp"
 
-1482821157 d:\projekty\knitekdev\game.hpp
+1483336373 d:\projekty\knitekdev\game.hpp
 	<stack>
 	<SFML/Graphics.hpp>
 	"texture_manager.hpp"
@@ -413,7 +414,7 @@
 1482328673 d:\projekty\knitekdev\game_state.hpp
 	"game.hpp"
 
-1482956569 source:d:\projekty\knitekdev\game_state_playgame.cpp
+1483340744 source:d:\projekty\knitekdev\game_state_playgame.cpp
 	<SFML/Graphics.hpp>
 	"game_state.hpp"
 	"game_state_playgame.hpp"
@@ -450,43 +451,60 @@
 	<string>
 	"menu_gui.hpp"
 
-1482823336 source:d:\projekty\knitekdev\animation_handler.cpp
+1483082742 source:d:\projekty\knitekdev\animation_handler.cpp
 	<SFML/Graphics.hpp>
 	<vector>
 	"animation_handler.hpp"
 
-1482841075 d:\projekty\knitekdev\animation_handler.hpp
+1483082711 d:\projekty\knitekdev\animation_handler.hpp
 	<SFML/Graphics.hpp>
 	<vector>
 
-1482508692 d:\projekty\knitekdev\menu_gui.hpp
+1483082959 d:\projekty\knitekdev\menu_gui.hpp
 	<SFML/Graphics.hpp>
 	<vector>
 	<string>
 
-1482510315 source:d:\projekty\knitekdev\menu_gui.cpp
+1483082992 source:d:\projekty\knitekdev\menu_gui.cpp
 	<SFML/Graphics.hpp>
 	<vector>
 	<string>
 	<fstream>
 	"menu_gui.hpp"
 
-1482948534 source:d:\projekty\knitekdev\player.cpp
+1483341210 source:d:\projekty\knitekdev\player.cpp
 	<SFML/Graphics.hpp>
 	"player.hpp"
 	<iostream>
 
-1482918961 d:\projekty\knitekdev\player.hpp
+1483340310 d:\projekty\knitekdev\player.hpp
 	<SFML/Graphics.hpp>
-	"animation_handler.hpp"
 	<vector>
+	"animation_handler.hpp"
+	"hit_list.hpp"
 
 1482921714 d:\projekty\knitekdev\level_map.hpp
 	<SFML/Graphics.hpp>
 	<vector>
 	"animation_handler.hpp"
 
-1482956166 source:d:\projekty\knitekdev\level_map.cpp
+1483338780 source:d:\projekty\knitekdev\level_map.cpp
 	"level_map.hpp"
 	<iostream>
+
+1483082338 d:\projekty\knitekdev\hit.hpp
+	<SFML/Graphics.hpp>
+	<iostream>
+	<vector>
+
+1483082302 source:d:\projekty\knitekdev\hit.cpp
+	"hit.hpp"
+
+1483341151 d:\projekty\knitekdev\hit_list.hpp
+	<SFML/Graphics.hpp>
+	<vector>
+	<string>
+
+1483341132 source:d:\projekty\knitekdev\hit_list.cpp
+	"hit_list.hpp"
 

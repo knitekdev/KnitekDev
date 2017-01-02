@@ -1,6 +1,7 @@
 #include "game.hpp"
 #include "game_state_startmenu.hpp"
 #include <locale>
+#include <iostream>
 
 int main()
 {

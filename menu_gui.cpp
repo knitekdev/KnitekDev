@@ -67,7 +67,7 @@ void GuiMenu::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 }
 
-std::string GuiMenu::check(const sf::Vector2f mousePos)
+std::string GuiMenu::check(const sf::Vector2f& mousePos)
 {
     for(int i=0; i<4; i++)
     {
@@ -81,4 +81,5 @@ std::string GuiMenu::check(const sf::Vector2f mousePos)
             buttons[i].shape.setFillColor(sf::Color(200,200,200,20));
         }
     }
+    return "gowno";
 }

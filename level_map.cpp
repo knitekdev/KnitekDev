@@ -49,6 +49,7 @@ void LevelMap::draw(sf::RenderWindow& window, float dt)
 {
     if(!this->objectList.empty())
     {
+//        window.draw(this->objectList.at(0).sprite);
         for(unsigned int i = 0; i<this->objectList.size(); i++)
         {
             this->objectList.at(i).animHandler.changeAnim(this->objectList.at(i).animVariant);

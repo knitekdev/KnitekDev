@@ -25,7 +25,7 @@ public:
 
     void start(sf::RenderWindow& window);
 
-    std::string check(const sf::Vector2f mousePos);
+    std::string check(const sf::Vector2f& mousePos);
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 };
 #endif // MENU_GUI_HPP

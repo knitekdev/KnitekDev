@@ -13,6 +13,7 @@
 				<Option compiler="mingw_610_32-bit" />
 				<Compiler>
 					<Add option="-Wextra" />
+					<Add option="-g" />
 				</Compiler>
 				<Linker>
 					<Add library="sfml-audio-d" />

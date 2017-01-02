@@ -7,9 +7,12 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+//#include <cstdlib>
 
 GameStatePlayGame::GameStatePlayGame(Game* game)
 {
+
+//    srand(time(NULL));
     this->game = game;
     sf::Vector2f pos = sf::Vector2f(this->game->window.getSize());
     this->guiView.setSize(pos);
@@ -31,11 +34,12 @@ void GameStatePlayGame::loadTextures()
 void GameStatePlayGame::draw(const float dt)
 {
     this->game->window.clear(sf::Color::Yellow);
+//    levelMap.objectList[0].animHandler.update(dt);
+//    levelMap.objectList[0].sprite.setTextureRect(levelMap.objectList[0].animHandler.bounds);
+//    this->game->window.draw(levelMap.objectList[0].sprite);
     levelMap.draw(this->game->window,dt);
-    levelMap.objectList[0].animHandler.update(dt);
-    levelMap.objectList[0].sprite.setTextureRect(levelMap.objectList[0].animHandler.bounds);
-    this->game->window.draw(levelMap.objectList[0].sprite);
     player.draw(this->game->window,dt);
+    this->game->window.setView(gameView);
     return;
 }
 
@@ -45,6 +49,10 @@ void GameStatePlayGame::update(const float dt)
     levelMap.update(dt);
     player.update(dt);
     player.makeMove(levelMap.collision(player.sprite,player.velocity));
+    if((player.sprite.getGlobalBounds().left + player.sprite.getGlobalBounds().width/2 > this->game->window.getSize().x / 2) &&
+        (player.sprite.getGlobalBounds().left < 5000))
+    this->gameView.setCenter(sf::Vector2f(player.sprite.getGlobalBounds().left + player.sprite.getGlobalBounds().width/2,
+                                    this->game->window.getSize().y/2));
     return;
 }
 
@@ -78,6 +86,8 @@ void GameStatePlayGame::handleInput()
                 else if(event.key.code == sf::Keyboard::D || event.key.code == sf::Keyboard::Right) player.turn(RIGHT);
                 else if(event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::Up) player.jump();
                 else if(event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::Down) player.sprite.move(0,1);
+                else if(event.key.code == sf::Keyboard::H) player.getHit(-2);
+                else if(event.key.code == sf::Keyboard::J) player.getHit(2);
 
                 if(event.key.code == sf::Keyboard::Escape) this->game->popState();
                 break;
@@ -141,16 +151,4 @@ void GameStatePlayGame::loadLevel(const unsigned int number)
         if(type==PLATFORM)levelMap.addPlatform(sf::FloatRect(sf::Vector2f(x,y),sf::Vector2f(width,height)));
     }
     plik.close();
-
-//    plik.open("data\\level\\platform_level_"+nr+".dat");
-//    plik>>objectnumber;
-//    for(int i = 0; i<objectnumber; i++)
-//    {
-//        plik>>x;
-//        plik>>y;
-//        plik>>width;
-//        plik>>height;
-//        levelMap.addPlatform( sf::FloatRect(sf::Vector2f(x,y),sf::Vector2f(width,height)) );
-//    }
-//    plik.close();
 }

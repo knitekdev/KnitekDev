@@ -27,7 +27,7 @@ class AnimationHandler
 private:
     std::vector<Animation> animations;
     float t;
-    int currentAnim;
+    unsigned int currentAnim;
 public:
     void addAnim(Animation& anim);
     void update(const float dt);

@@ -5,7 +5,7 @@
 
 void AnimationHandler::update(const float dt)
 {
-    if(currentAnim >= this->animations.size() || currentAnim < 0) return;
+    if(currentAnim >= this->animations.size()) return;
 
     float duration = this->animations[currentAnim].duration;
 
@@ -38,7 +38,7 @@ void AnimationHandler::addAnim(Animation& anim)
 
 void AnimationHandler::changeAnim(unsigned int animID)
 {
-    if(this->currentAnim == animID || animID >= this->animations.size() || animID < 0) return;
+    if(this->currentAnim == animID || animID >= this->animations.size()) return;
 
     this->currentAnim = animID;
     sf::IntRect rect = this->frameSize;
