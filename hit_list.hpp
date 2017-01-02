@@ -12,7 +12,7 @@ public:
     {
         this->lifetime = 0;
         this->text.setFont(font);
-        this->text.setCharacterSize(15);
+        this->text.setCharacterSize(20);
         this->text.setPosition(pos);
         this->text.setFillColor(color);
         this->text.setString(std::to_string(wartosc));
@@ -21,7 +21,7 @@ public:
     {
         this->lifetime = 0;
         this->text.setFont(font);
-        this->text.setCharacterSize(15);
+        this->text.setCharacterSize(20);
         this->text.setPosition(pos);
         this->text.setFillColor(sf::Color::Red);
         this->text.setString(std::to_string(wartosc));

@@ -5,6 +5,7 @@
 #include <vector>
 #include "animation_handler.hpp"
 #include "hit_list.hpp"
+#include "hp_bar.hpp"
 
 
 enum PlayerState{LEFT,RIGHT,STAND};
@@ -15,15 +16,17 @@ public:
     PlayerState playerState;
     sf::Vector2f velocity;
     HitList hitList;
+    Hp_Bar hpBar;
     float speed;
     float jumpPower;
-    unsigned int health;
-    unsigned int damage;
+    int health;
+    int maxhealth;
+    int damage;
     AnimationHandler animHandler;
     sf::Sprite sprite;
 
-    void setStats(const unsigned int health,const unsigned int damage,
-                  const std::vector<Animation>& animations,const sf::Texture& texture);
+    void setStats(const std::vector<Animation>& animations,const sf::Texture& texture);
+    void load(int health, int damage);
 
     void update(const float dt);
     void draw(sf::RenderWindow& window,const float dt);

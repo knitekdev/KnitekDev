@@ -1,9 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include "player.hpp"
 #include <iostream>
-void Player::setStats(const unsigned int health, const unsigned int damage,
-                      const std::vector<Animation>& animations, const sf::Texture& texture)
+#include <cstdlib>
+void Player::setStats(const std::vector<Animation>& animations, const sf::Texture& texture)
 {
+    srand(time(NULL));
     this->playerState = STAND;
     this->speed = 8;
     this->jumpPower = -8;
@@ -82,14 +83,25 @@ void Player::update(const float dt)
     }
     velocity.y +=speed * 2.5f * dt;
     hitList.update(dt);
+    hpBar.update(maxhealth,health);
 }
 
 void Player::getHit(const int& ammout)
 {
-    if(ammout<0)
-    hitList.addHit(sf::Vector2f(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width/2,
-                                sprite.getGlobalBounds().top),ammout,sf::Color::Red);
-    else
-    hitList.addHit(sf::Vector2f(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width/2,
-                                sprite.getGlobalBounds().top),ammout,sf::Color::Green);
+    if(health+ammout >= 0 && health+ammout <= maxhealth)
+    {
+        health+=ammout;
+        if(ammout<0)
+        hitList.addHit(sf::Vector2f(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width/2 + ((std::rand()%21)+1)-10,
+                                    sprite.getGlobalBounds().top - 5 - ((std::rand()%16)+1)),ammout,sf::Color::Red);
+        else
+        hitList.addHit(sf::Vector2f(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width/2 + ((std::rand()%21)+1)-10,
+                                    sprite.getGlobalBounds().top - 5 - ((std::rand()%16)+1)),ammout,sf::Color::Green);
+    }
+}
+void Player::load(int health, int damage)
+{
+    this->maxhealth = health;
+    this->health = health;
+    this->damage = damage;
 }

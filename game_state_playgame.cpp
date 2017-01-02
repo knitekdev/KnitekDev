@@ -23,7 +23,7 @@ GameStatePlayGame::GameStatePlayGame(Game* game)
     this->loadTextures();
     this->loadLevel(1);
 
-    this->player.setStats(10,1,{Animation(0,2,0.15f),Animation(0,2,0.15f),Animation(0,2,0.3f)},texmgr.getRef("ludziktest1"));
+    this->player.setStats({Animation(0,2,0.15f),Animation(0,2,0.15f),Animation(0,2,0.3f)},texmgr.getRef("ludziktest1"));
 }
 
 void GameStatePlayGame::loadTextures()
@@ -33,13 +33,19 @@ void GameStatePlayGame::loadTextures()
 
 void GameStatePlayGame::draw(const float dt)
 {
+    this->game->window.setView(gameView);
     this->game->window.clear(sf::Color::Yellow);
+
 //    levelMap.objectList[0].animHandler.update(dt);
 //    levelMap.objectList[0].sprite.setTextureRect(levelMap.objectList[0].animHandler.bounds);
 //    this->game->window.draw(levelMap.objectList[0].sprite);
     levelMap.draw(this->game->window,dt);
     player.draw(this->game->window,dt);
-    this->game->window.setView(gameView);
+
+    this->game->window.setView(guiView);
+    player.hpBar.draw(this->game->window);
+
+
     return;
 }
 
@@ -150,5 +156,14 @@ void GameStatePlayGame::loadLevel(const unsigned int number)
         levelMap.addObject(Object(sf::Vector2f((float)x,(float)y),width,height,texmgr.getRef(tmp),animations,(ObjectType)type,variant));
         if(type==PLATFORM)levelMap.addPlatform(sf::FloatRect(sf::Vector2f(x,y),sf::Vector2f(width,height)));
     }
+    plik.close();
+    name="data\\level\\player_level_"+nr+".dat";
+    plik.open(name,std::ios::in);
+    plik>>x;
+    plik>>y;
+    player.load(x,y);
+    plik>>x;
+    plik>>y;
+    player.hpBar.setSprites(texmgr.getRef("hpborder"),texmgr.getRef("hpsprite"),sf::Vector2f(x,y),sf::Vector2f(x+5,y-2));
     plik.close();
 }
