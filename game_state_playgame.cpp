@@ -23,7 +23,8 @@ GameStatePlayGame::GameStatePlayGame(Game* game)
     this->loadTextures();
     this->loadLevel(1);
 
-    this->player.setStats({Animation(0,2,0.15f),Animation(0,2,0.15f),Animation(0,2,0.3f)},texmgr.getRef("ludziktest1"));
+    this->player.setStats({Animation(0,3,0.15f),Animation(0,3,0.15f),Animation(0,1,0.3f)},
+                          texmgr.getRef("player"),texmgr.getRef("soap"));
 }
 
 void GameStatePlayGame::loadTextures()
@@ -35,11 +36,10 @@ void GameStatePlayGame::draw(const float dt)
 {
     this->game->window.setView(gameView);
     this->game->window.clear(sf::Color::Yellow);
-
-//    levelMap.objectList[0].animHandler.update(dt);
-//    levelMap.objectList[0].sprite.setTextureRect(levelMap.objectList[0].animHandler.bounds);
-//    this->game->window.draw(levelMap.objectList[0].sprite);
     levelMap.draw(this->game->window,dt);
+
+    attackList.draw(this->game->window);
+
     player.draw(this->game->window,dt);
 
     this->game->window.setView(guiView);
@@ -51,7 +51,9 @@ void GameStatePlayGame::draw(const float dt)
 
 void GameStatePlayGame::update(const float dt)
 {
-    if(player.sprite.getPosition().y > 730)this->game->popState();
+    if(player.sprite.getPosition().y > 730 || player.health<=0)this->game->popState();
+    attackList.update(dt);
+    player.getHit(attackList.check(player.sprite.getGlobalBounds()) * -1);
     levelMap.update(dt);
     player.update(dt);
     player.makeMove(levelMap.collision(player.sprite,player.velocity));
@@ -65,7 +67,7 @@ void GameStatePlayGame::update(const float dt)
 void GameStatePlayGame::handleInput()
 {
     sf::Event event;
-
+    sf::Vector2f mousePos = this->game->window.mapPixelToCoords(sf::Mouse::getPosition(this->game->window));
     while(this->game->window.pollEvent(event))
     {
         switch(event.type)
@@ -92,7 +94,7 @@ void GameStatePlayGame::handleInput()
                 else if(event.key.code == sf::Keyboard::D || event.key.code == sf::Keyboard::Right) player.turn(RIGHT);
                 else if(event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::Up) player.jump();
                 else if(event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::Down) player.sprite.move(0,1);
-                else if(event.key.code == sf::Keyboard::H) player.getHit(-2);
+                else if(event.key.code == sf::Keyboard::Space) attackList.addAttack(player.pushAttack());
                 else if(event.key.code == sf::Keyboard::J) player.getHit(2);
 
                 if(event.key.code == sf::Keyboard::Escape) this->game->popState();

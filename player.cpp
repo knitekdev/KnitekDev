@@ -2,7 +2,7 @@
 #include "player.hpp"
 #include <iostream>
 #include <cstdlib>
-void Player::setStats(const std::vector<Animation>& animations, const sf::Texture& texture)
+void Player::setStats(const std::vector<Animation>& animations, const sf::Texture& texture, const sf::Texture& soapTX)
 {
     srand(time(NULL));
     this->playerState = STAND;
@@ -18,6 +18,7 @@ void Player::setStats(const std::vector<Animation>& animations, const sf::Textur
         this->animHandler.addAnim(animation);
     }
     this->animHandler.update(0.0f);
+    projectile = Projectile(soapTX,sf::Vector2f(2,2),sf::Vector2f(450,0.5f),400,2,0);
 }
 
 void Player::makeMove(bool collision)
@@ -72,12 +73,14 @@ void Player::update(const float dt)
         {
             if(velocity.x <0)turnboost = 2;
             if(velocity.x > (speed * -1))velocity.x +=speed * dt * -1 * 1.5f * turnboost;
+            lastplayerState = LEFT;
             break;
         }
     case RIGHT:
         {
             if(velocity.x >0)turnboost = 2;
             if(velocity.x < speed)velocity.x +=speed * dt * 1.5f * turnboost;
+            lastplayerState = RIGHT;
             break;
         }
     }
@@ -88,12 +91,17 @@ void Player::update(const float dt)
 
 void Player::getHit(const int& ammout)
 {
+    if(ammout!=0)
     if(health+ammout >= 0 && health+ammout <= maxhealth)
     {
         health+=ammout;
         if(ammout<0)
+        {
+        velocity.x = (velocity.x * -1) + 5;
+        velocity.y += -5;
         hitList.addHit(sf::Vector2f(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width/2 + ((std::rand()%21)+1)-10,
                                     sprite.getGlobalBounds().top - 5 - ((std::rand()%16)+1)),ammout,sf::Color::Red);
+        }
         else
         hitList.addHit(sf::Vector2f(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width/2 + ((std::rand()%21)+1)-10,
                                     sprite.getGlobalBounds().top - 5 - ((std::rand()%16)+1)),ammout,sf::Color::Green);
@@ -104,4 +112,24 @@ void Player::load(int health, int damage)
     this->maxhealth = health;
     this->health = health;
     this->damage = damage;
+}
+
+Projectile Player::pushAttack()
+{
+    Projectile projectilee = projectile;
+    if(lastplayerState == LEFT)
+    {
+        projectilee.velocity.x *= -1;
+        projectilee.sprite.setPosition(sf::Vector2f(sprite.getGlobalBounds().left - projectile.sprite.getGlobalBounds().width + 20,
+                                               sprite.getGlobalBounds().top + sprite.getGlobalBounds().height/2 - 20));
+        projectilee.startx = sprite.getGlobalBounds().left - projectile.sprite.getGlobalBounds().width + 20;
+
+    }
+    else
+    {
+        projectilee.sprite.setPosition(sf::Vector2f(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width - 20,
+                                               sprite.getGlobalBounds().top + sprite.getGlobalBounds().height/2 - 20));
+        projectilee.startx = sprite.getGlobalBounds().left + sprite.getGlobalBounds().width - 20;
+    }
+    return projectilee;
 }

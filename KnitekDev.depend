@@ -414,7 +414,7 @@
 1482328673 d:\projekty\knitekdev\game_state.hpp
 	"game.hpp"
 
-1483347850 source:d:\projekty\knitekdev\game_state_playgame.cpp
+1483466052 source:d:\projekty\knitekdev\game_state_playgame.cpp
 	<SFML/Graphics.hpp>
 	"game_state.hpp"
 	"game_state_playgame.hpp"
@@ -424,13 +424,14 @@
 	<fstream>
 	<string>
 
-1482861199 d:\projekty\knitekdev\game_state_playgame.hpp
+1483458554 d:\projekty\knitekdev\game_state_playgame.hpp
 	<SFML/Graphics.hpp>
 	"texture_manager.hpp"
 	"animation_handler.hpp"
 	"game_state.hpp"
 	"player.hpp"
 	"level_map.hpp"
+	"attack.hpp"
 
 1482440206 d:\projekty\knitekdev\game_state_startmenu.hpp
 	<SFML/Graphics.hpp>
@@ -472,17 +473,19 @@
 	<fstream>
 	"menu_gui.hpp"
 
-1483346418 source:d:\projekty\knitekdev\player.cpp
+1483466384 source:d:\projekty\knitekdev\player.cpp
 	<SFML/Graphics.hpp>
 	"player.hpp"
 	<iostream>
+	<cstdlib>
 
-1483344981 d:\projekty\knitekdev\player.hpp
+1483466096 d:\projekty\knitekdev\player.hpp
 	<SFML/Graphics.hpp>
 	<vector>
 	"animation_handler.hpp"
 	"hit_list.hpp"
 	"hp_bar.hpp"
+	"attack.hpp"
 
 1482921714 d:\projekty\knitekdev\level_map.hpp
 	<SFML/Graphics.hpp>
@@ -514,5 +517,13 @@
 
 1483347699 source:d:\projekty\knitekdev\hp_bar.cpp
 	"hp_bar.hpp"
+	<iostream>
+
+1483465531 source:d:\projekty\knitekdev\attack.cpp
+	"attack.hpp"
+
+1483464062 d:\projekty\knitekdev\attack.hpp
+	<SFML/Graphics.hpp>
+	<vector>
 	<iostream>
 
