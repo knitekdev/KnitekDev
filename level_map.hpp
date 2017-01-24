@@ -2,6 +2,7 @@
 #define LEVEL_MAP_HPP
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "defines.hpp"
 #include "animation_handler.hpp"
 
 
@@ -40,6 +41,7 @@ public:
     void draw(sf::RenderWindow& window, float dt);
     void addObject(Object object);
     void addPlatform(sf::FloatRect platform);
-    bool collision(sf::Sprite& object,sf::Vector2f& velocity);
+    bool collision(sf::Sprite& objectin,sf::Vector2f& velocity);
+    bool monstercollision(sf::Sprite& objectin, sf::Vector2f& velocityin, const float &dt, PlayerState &monsterState);
 };
 #endif // LEVEL_MAP_HPP

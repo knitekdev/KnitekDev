@@ -37,7 +37,7 @@ public:
     void addAttack(const Projectile& pro);
     void update(const float dt);
     void draw(sf::RenderWindow& window);
-    int check(sf::FloatRect playerRect);
+    int check(sf::FloatRect playerRect, int ofiara);
 };
 
 #endif // ATTACK_HPP

@@ -23,8 +23,8 @@ GameStatePlayGame::GameStatePlayGame(Game* game)
     this->loadTextures();
     this->loadLevel(1);
 
-    this->player.setStats({Animation(0,3,0.15f),Animation(0,3,0.15f),Animation(0,1,0.3f)},
-                          texmgr.getRef("player"),texmgr.getRef("soap"));
+//    this->player.setStats({Animation(0,3,0.15f),Animation(0,3,0.15f),Animation(0,1,0.3f)},
+//                          texmgr.getRef("player"),texmgr.getRef("soap"));
 }
 
 void GameStatePlayGame::loadTextures()
@@ -41,6 +41,7 @@ void GameStatePlayGame::draw(const float dt)
     attackList.draw(this->game->window);
 
     player.draw(this->game->window,dt);
+    monsterManager.draw(this->game->window,dt);
 
     this->game->window.setView(guiView);
     player.hpBar.draw(this->game->window);
@@ -52,11 +53,15 @@ void GameStatePlayGame::draw(const float dt)
 void GameStatePlayGame::update(const float dt)
 {
     if(player.sprite.getPosition().y > 730 || player.health<=0)this->game->popState();
+
     attackList.update(dt);
-    player.getHit(attackList.check(player.sprite.getGlobalBounds()) * -1);
+    player.getHit(attackList.check(player.sprite.getGlobalBounds(),0) * -1);
     levelMap.update(dt);
     player.update(dt);
-    player.makeMove(levelMap.collision(player.sprite,player.velocity));
+    monsterManager.update(player.sprite.getGlobalBounds().left,dt);
+//    std::cout<<player.velocity.x<<" "<<player.velocity.y<<std::endl;
+//    player.makeMove(levelMap.collision(player.sprite,player.velocity));
+
     if((player.sprite.getGlobalBounds().left + player.sprite.getGlobalBounds().width/2 > this->game->window.getSize().x / 2) &&
         (player.sprite.getGlobalBounds().left < 5000))
     this->gameView.setCenter(sf::Vector2f(player.sprite.getGlobalBounds().left + player.sprite.getGlobalBounds().width/2,
@@ -152,20 +157,15 @@ void GameStatePlayGame::loadLevel(const unsigned int number)
             plik>>duration;
             animations.push_back(Animation(framestart,frameend,duration));
         }
-        if(animationnumber==0)animations.push_back(Animation(0,0,1.0f));
+        if(animationnumber == 0)animations.push_back(Animation(0,0,1.0f));
         plik>>type;
         plik>>variant;
         levelMap.addObject(Object(sf::Vector2f((float)x,(float)y),width,height,texmgr.getRef(tmp),animations,(ObjectType)type,variant));
         if(type==PLATFORM)levelMap.addPlatform(sf::FloatRect(sf::Vector2f(x,y),sf::Vector2f(width,height)));
     }
     plik.close();
-    name="data\\level\\player_level_"+nr+".dat";
-    plik.open(name,std::ios::in);
-    plik>>x;
-    plik>>y;
-    player.load(x,y);
-    plik>>x;
-    plik>>y;
-    player.hpBar.setSprites(texmgr.getRef("hpborder"),texmgr.getRef("hpsprite"),sf::Vector2f(x,y),sf::Vector2f(x+5,y-2));
-    plik.close();
+
+    player.load(nr,texmgr,&levelMap);
+    monsterManager.load(nr,texmgr,&levelMap,&attackList);
+
 }

@@ -3,17 +3,21 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <fstream>
+#include <string>
+#include "texture_manager.hpp"
 #include "animation_handler.hpp"
 #include "hit_list.hpp"
 #include "hp_bar.hpp"
 #include "attack.hpp"
-
-
-enum PlayerState{LEFT,RIGHT,STAND};
+#include "level_map.hpp"
+#include "defines.hpp"
 
 class Player
 {
+    LevelMap *levelMap;
 public:
+
     PlayerState playerState;
     PlayerState lastplayerState;
     sf::Vector2f velocity;
@@ -22,14 +26,14 @@ public:
     Projectile projectile;
     float speed;
     float jumpPower;
+    float attSpeed;
+    float attSpeedtimer;
     int health;
     int maxhealth;
-    int damage;
     AnimationHandler animHandler;
     sf::Sprite sprite;
 
-    void setStats(const std::vector<Animation>& animations,const sf::Texture& texture, const sf::Texture& soapTX);
-    void load(int health, int damage);
+    void load(std::string nr, TextureManager& texmgr, LevelMap *levelMap);
 
     void update(const float dt);
     void draw(sf::RenderWindow& window,const float dt);

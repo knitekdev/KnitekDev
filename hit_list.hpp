@@ -1,4 +1,9 @@
+#ifndef HIT_LIST_HPP
+#define HIT_LIST_HPP
+
+
 #include <SFML/Graphics.hpp>
+
 #include <vector>
 #include <string>
 
@@ -44,3 +49,6 @@ public:
     void draw(sf::RenderWindow& window);
     void addHit(sf::Vector2f pos, int wartosc, sf::Color color);
 };
+
+
+#endif // HIT_LIST_HPP

@@ -58,14 +58,14 @@ void Attack::draw(sf::RenderWindow& window)
     }
 }
 
-int Attack::check(sf::FloatRect playerRect)
+int Attack::check(sf::FloatRect playerRect, int ofiara)
 {
     if(!attacks.empty())
     {
         for(unsigned int i=0; i<attacks.size(); i++)
         {
             if(playerRect.intersects(attacks[i].sprite.getGlobalBounds()))
-                if(attacks[i].owner != 0)
+                if(attacks[i].owner != ofiara)
                 {
                     attacks.erase(attacks.begin()+i);
                     return attacks[i].damage;
