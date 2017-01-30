@@ -42,11 +42,24 @@ void Monster::update(float playerX, const float &dt, Attack *att, LevelMap *leve
 
         if(attacktimer>attackspeed)
         {
+            //odwracanie predkosci pocisku do kierunku ruchu
             if(monsterState == RIGHT && projectile.velocity.x < 0) projectile.velocity.x*=-1;
             if(monsterState == LEFT && projectile.velocity.x > 0) projectile.velocity.x*=-1;
             attacktimer=0;
-            projectile.sprite.setPosition(sf::Vector2f(sprite.getGlobalBounds().left,sprite.getGlobalBounds().top));
-            projectile.startx = sprite.getGlobalBounds().left;
+
+            //ustawienie pozycji pocisku wzgledem obiektu z uwzglednieniem korekcji zawartej w pocisku (spos)
+            if(monsterState == LEFT)
+            {
+                projectile.sprite.setPosition(sf::Vector2f(sprite.getGlobalBounds().left + projectile.spos.x
+                                                       ,sprite.getGlobalBounds().top+projectile.spos.y));
+            }
+            else
+            {
+                projectile.sprite.setPosition(sf::Vector2f((sprite.getGlobalBounds().left + sprite.getGlobalBounds().width) - projectile.spos.x
+                                                       ,sprite.getGlobalBounds().top+projectile.spos.y));
+            }
+            //ustalenie pozycji startowej pocisku do odmierzenia zasiegu ataku
+            projectile.startx = projectile.sprite.getGlobalBounds().left;
 
             att->addAttack(projectile);
         }
@@ -116,9 +129,9 @@ void MonsterManager::load(std::string nr, TextureManager& texmgr, LevelMap* leve
     for(int i=0; i<monsterNumber; i++)
     {
         std::vector<Animation> animations;
-        plik>>health;
         plik>>x; plik>>y;
         plik>>texname;
+        plik>>health;
         plik>>x1; plik>>y1;
         plik>>animNumber;
         for(int j=0; j<animNumber; j++)

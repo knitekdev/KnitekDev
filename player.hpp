@@ -16,6 +16,7 @@
 class Player
 {
     LevelMap *levelMap;
+    Attack *attackList;
 public:
 
     PlayerState playerState;
@@ -33,7 +34,7 @@ public:
     AnimationHandler animHandler;
     sf::Sprite sprite;
 
-    void load(std::string nr, TextureManager& texmgr, LevelMap *levelMap);
+    void load(std::string nr, TextureManager& texmgr, LevelMap *levelMap, Attack *attackList);
 
     void update(const float dt);
     void draw(sf::RenderWindow& window,const float dt);

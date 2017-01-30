@@ -43,5 +43,6 @@ public:
     void addPlatform(sf::FloatRect platform);
     bool collision(sf::Sprite& objectin,sf::Vector2f& velocity);
     bool monstercollision(sf::Sprite& objectin, sf::Vector2f& velocityin, const float &dt, PlayerState &monsterState);
+    bool playercollision(sf::Sprite& objectin, sf::Vector2f& velocityin);
 };
 #endif // LEVEL_MAP_HPP

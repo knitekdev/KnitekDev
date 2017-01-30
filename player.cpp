@@ -40,7 +40,10 @@ sf::FloatRect Player::getRect()
 
 void Player::update(const float dt)
 {
-    float turnboost = 6;
+    //sprawdzanie czy jakis pocisk nie trafi³ gracza
+    getHit(attackList->check(sprite.getGlobalBounds(),0) * -1);
+
+    static float turnboost = 6;
     switch(playerState)
     {
     case STAND:
@@ -64,14 +67,16 @@ void Player::update(const float dt)
         }
     }
     velocity.y +=speed * 2.5f * dt;
+
     hitList.update(dt);
     hpBar.update(maxhealth,health);
     attSpeedtimer+=dt;
 
-    if(!levelMap->collision(sprite,velocity))
-    {
-        sprite.move(velocity);
-    }
+//    if(!levelMap->collision(sprite,velocity))
+//    {
+//        sprite.move(velocity);
+//    }
+    levelMap->playercollision(sprite,velocity);
 }
 
 void Player::getHit(const int& ammout)
@@ -122,10 +127,11 @@ Projectile Player::pushAttack()
 }
 
 
-void Player::load(std::string nr, TextureManager& texmgr, LevelMap *levelMap)
+void Player::load(std::string nr, TextureManager& texmgr, LevelMap *levelMap, Attack *attackList)
 {
     srand(time(NULL));
     this->levelMap = levelMap;
+    this->attackList = attackList;
     playerState = STAND;
     std::string name,tmp1,tmp2;
     std::fstream plik;

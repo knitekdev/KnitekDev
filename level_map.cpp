@@ -6,6 +6,39 @@ void LevelMap::update(float dt)
 
 }
 
+bool LevelMap::playercollision(sf::Sprite& objectin, sf::Vector2f& velocityin)
+{
+    sf::Sprite objecty = objectin;
+    sf::Sprite objectx = objectin;
+    objectx.move(velocityin.x,0);
+    objecty.move(0,velocityin.y);
+    if(objectx.getGlobalBounds().left < 0) velocityin.x = 0;
+
+    if(!this->platformList.empty())
+    {
+        for(unsigned int i=0; i<platformList.size(); i++)
+        {
+            if(velocityin.y>=0)
+            {
+                if(platformList[i].intersects(objecty.getGlobalBounds()))
+                {
+                    if((platformList[i].left < ((objectx.getGlobalBounds().left + objectx.getGlobalBounds().width)-15))&&
+                       ((platformList[i].left+platformList[i].width)>(objectx.getGlobalBounds().left+15)))
+                    if(!platformList[i].intersects(objectin.getGlobalBounds()))
+                    {
+                        velocityin.y = platformList[i].top - (objectin.getGlobalBounds().top + objectin.getGlobalBounds().height);
+                        objectin.move(velocityin);
+                        velocityin.y = 0;
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    objectin.move(velocityin);
+    return false;
+}
+
 bool LevelMap::monstercollision(sf::Sprite& objectin, sf::Vector2f& velocityin,const float& dt, PlayerState &monsterState)
 {
     sf::Sprite objectx = objectin;
@@ -38,6 +71,8 @@ bool LevelMap::monstercollision(sf::Sprite& objectin, sf::Vector2f& velocityin,c
                    && objecty.getGlobalBounds().top< platformList.at(i).top + platformList.at(i).height)
                     y = platformList.at(i).top - (objectin.getGlobalBounds().top + objectin.getGlobalBounds().height);
             }
+
+            //zmiana kierunku gdy konczy sie platforma
             if(trigger && ((platformList.at(i).left > objectx.getGlobalBounds().left) ||
                            (platformList.at(i).left + platformList.at(i).width < objectx.getGlobalBounds().left + objectx.getGlobalBounds().width)))
             {
@@ -59,7 +94,7 @@ bool LevelMap::collision(sf::Sprite& objectin, sf::Vector2f& velocity)
     sf::Sprite object = objectin;
     object.move(velocity);
 
-    if(object.getGlobalBounds().left<0 || object.getGlobalBounds().left + object.getGlobalBounds().width > 1280)velocity.x=0;
+    if(object.getGlobalBounds().left<0 /*|| object.getGlobalBounds().left + object.getGlobalBounds().width > 1280*/)velocity.x=0;
 
     if(!this->platformList.empty())
     for(unsigned int i = 0; i < platformList.size(); i++)
@@ -90,6 +125,7 @@ bool LevelMap::collision(sf::Sprite& objectin, sf::Vector2f& velocity)
             }
         }
     }
+    objectin.move(velocity);
     return false;
 }
 

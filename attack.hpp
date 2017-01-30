@@ -8,6 +8,7 @@ class Projectile
 public:
     sf::Sprite sprite;
     sf::Vector2f velocity;
+    sf::Vector2f spos;
     int startx;
     int range;
     int damage;
@@ -17,7 +18,8 @@ public:
                int damage, int owner)
                {
                    this->sprite.setTexture(texture);
-                   this->sprite.setPosition(position);
+                   this->sprite.setPosition(0,0);
+                   this->spos = position;
                    this->velocity = velocity;
                    this->startx = position.x;
                    this->range = range;

@@ -22,20 +22,16 @@ GameStatePlayGame::GameStatePlayGame(Game* game)
     this->gameView.setCenter(pos);
     this->loadTextures();
     this->loadLevel(1);
-
-//    this->player.setStats({Animation(0,3,0.15f),Animation(0,3,0.15f),Animation(0,1,0.3f)},
-//                          texmgr.getRef("player"),texmgr.getRef("soap"));
 }
 
 void GameStatePlayGame::loadTextures()
 {
-    texmgr.loadTexture("ludziktest1","data\\textures\\ludziktest1.png");
 }
 
 void GameStatePlayGame::draw(const float dt)
 {
     this->game->window.setView(gameView);
-    this->game->window.clear(sf::Color::Yellow);
+    this->game->window.clear(sf::Color(165,200,15));
     levelMap.draw(this->game->window,dt);
 
     attackList.draw(this->game->window);
@@ -52,16 +48,15 @@ void GameStatePlayGame::draw(const float dt)
 
 void GameStatePlayGame::update(const float dt)
 {
-    if(player.sprite.getPosition().y > 730 || player.health<=0)this->game->popState();
+    if(player.sprite.getPosition().y > 730 || player.health<=0)this->game->popState(); //usmiercanie gdy gracz spadnie pod ekran
 
-    attackList.update(dt);
-    player.getHit(attackList.check(player.sprite.getGlobalBounds(),0) * -1);
+    attackList.update(dt); //aktualizacja wszystkich pociskow
     levelMap.update(dt);
     player.update(dt);
     monsterManager.update(player.sprite.getGlobalBounds().left,dt);
-//    std::cout<<player.velocity.x<<" "<<player.velocity.y<<std::endl;
-//    player.makeMove(levelMap.collision(player.sprite,player.velocity));
 
+
+    //ruch kamery za graczem
     if((player.sprite.getGlobalBounds().left + player.sprite.getGlobalBounds().width/2 > this->game->window.getSize().x / 2) &&
         (player.sprite.getGlobalBounds().left < 5000))
     this->gameView.setCenter(sf::Vector2f(player.sprite.getGlobalBounds().left + player.sprite.getGlobalBounds().width/2,
@@ -165,7 +160,7 @@ void GameStatePlayGame::loadLevel(const unsigned int number)
     }
     plik.close();
 
-    player.load(nr,texmgr,&levelMap);
+    player.load(nr,texmgr,&levelMap,&attackList);
     monsterManager.load(nr,texmgr,&levelMap,&attackList);
 
 }
