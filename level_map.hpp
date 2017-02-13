@@ -15,6 +15,10 @@ public:
     sf::Sprite sprite;
     ObjectType objectType;
     int animVariant;
+    Object()
+    {
+
+    }
     Object(const sf::Vector2f position,
            const unsigned int width, const unsigned int height, const sf::Texture& texture,
            const std::vector<Animation>& animations, const ObjectType objectType, const int animVariant)

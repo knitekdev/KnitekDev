@@ -15,7 +15,7 @@ Button::Button(sf::Text& text, sf::RectangleShape& shape, std::string& message)
 void GuiMenu::start(sf::RenderWindow& window)
 {
     authors = false;
-    std::string msg[] = {"new_game", "load_game", "authors", "exit"};
+    std::string msg[] = {"new_game", "continue", "authors", "exit"};
     sf::RectangleShape shape;
     shape.setSize(sf::Vector2f(200,50));
     shape.setOutlineThickness(3);

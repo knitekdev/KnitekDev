@@ -5,12 +5,13 @@
 
 #include "game_state.hpp"
 #include "menu_gui.hpp"
-
+#include <fstream>
+#include <string>
 class GameStateStartMenu : public GameState
 {
 private:
     sf::View view;
-    void loadgame();
+    void loadgame(std::string msg);
 public:
 
     virtual void draw(const float dt);

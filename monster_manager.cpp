@@ -1,6 +1,6 @@
 #include "monster_manager.hpp"
 
-void Monster::getHit(int ammount)
+void Monster::getHit(const int &ammount)
 {
     if(ammount!=0)
     {
@@ -14,7 +14,7 @@ void Monster::update(float playerX, const float &dt, Attack *att, LevelMap *leve
     int range = sprite.getGlobalBounds().left - playerX; range *= (range<0)? -1 : 1;
     if(range < viewrange)
     {
-        attacktimer+=dt;
+
         switch(monsterState)
         {
         case LEFT:
@@ -28,18 +28,25 @@ void Monster::update(float playerX, const float &dt, Attack *att, LevelMap *leve
                 break;
             }
         }
-//        if(playerX > sprite.getGlobalBounds().left)
-//        {
-//            monsterState = RIGHT;
-//        }
-//        else
-//        {
-//            monsterState = LEFT;
-//        }
 
-        if(!levelMap->monstercollision(sprite,velocity,dt,monsterState))
-            sprite.move(0,velocity.y*dt);
 
+        if(monsterType!=3)
+            if(!levelMap->monstercollision(sprite,velocity,dt,monsterState))
+            {
+                sprite.move(0,velocity.y*dt);
+            }
+
+        if(monsterType==2)
+            if(playerX > sprite.getGlobalBounds().left)
+                {
+                    monsterState = RIGHT;
+                }
+            else
+                {
+                    monsterState = LEFT;
+                }
+
+        attacktimer+=dt;
         if(attacktimer>attackspeed)
         {
             //odwracanie predkosci pocisku do kierunku ruchu
@@ -60,6 +67,7 @@ void Monster::update(float playerX, const float &dt, Attack *att, LevelMap *leve
             }
             //ustalenie pozycji startowej pocisku do odmierzenia zasiegu ataku
             projectile.startx = projectile.sprite.getGlobalBounds().left;
+            projectile.starty = projectile.sprite.getGlobalBounds().top;
 
             att->addAttack(projectile);
         }
@@ -130,20 +138,26 @@ void MonsterManager::load(std::string nr, TextureManager& texmgr, LevelMap* leve
     {
         std::vector<Animation> animations;
         plik>>x; plik>>y;
+        plik>>width; plik>>height;
         plik>>texname;
         plik>>health;
         plik>>x1; plik>>y1;
         plik>>animNumber;
-        for(int j=0; j<animNumber; j++)
+        if(animNumber == 0)
         {
-            plik>>startFrame; plik>>endFrame; plik>>duration;
-            animations.push_back(Animation(startFrame,endFrame,duration));
+            animations.push_back(Animation(0,0,1.0f));
         }
-        if(animNumber == 0)animations.push_back(Animation(0,0,1.0f));
+        else
+        {
+            for(int j=0; j<animNumber; j++)
+            {
+                plik>>startFrame; plik>>endFrame; plik>>duration;
+                animations.push_back(Animation(startFrame,endFrame,duration));
+            }
+        }
         plik>>animVariant;
-        plik>>width; plik>>height;
         plik>>viewRange; plik>>attackSpeed; plik>>monsterType;
-        monsters.push_back(Monster(health,sf::Vector2f(x,y),texmgr.getRef(texname),sf::Vector2f(x1,y1),animations,animVariant,
+        monsters.push_back(Monster(sf::Vector2f(x,y),texmgr.getRef(texname),health,sf::Vector2f(x1,y1),animations,animVariant,
                                    width,height,viewRange,attackSpeed,monsterType));
 
         plik>>texname;

@@ -79,7 +79,7 @@ void Player::update(const float dt)
     levelMap->playercollision(sprite,velocity);
 }
 
-void Player::getHit(const int& ammout)
+void Player::getHit(const int &ammout)
 {
     if(ammout!=0)
     {
@@ -102,27 +102,25 @@ void Player::getHit(const int& ammout)
 }
 
 
-Projectile Player::pushAttack()
+void Player::pushAttack()
 {
     if(attSpeedtimer>attSpeed)
     {
         attSpeedtimer = 0;
-        Projectile projectilee = projectile;
+        if(lastplayerState == RIGHT && projectile.velocity.x < 0) projectile.velocity.x*=-1;
+        if(lastplayerState == LEFT && projectile.velocity.x > 0) projectile.velocity.x*=-1;
         if(lastplayerState == LEFT)
         {
-            projectilee.velocity.x *= -1;
-            projectilee.sprite.setPosition(sf::Vector2f(sprite.getGlobalBounds().left - projectile.sprite.getGlobalBounds().width + 20,
-                                                   sprite.getGlobalBounds().top + sprite.getGlobalBounds().height/2 - 20));
-            projectilee.startx = sprite.getGlobalBounds().left - projectile.sprite.getGlobalBounds().width + 20;
-
+            projectile.sprite.setPosition(sf::Vector2f((sprite.getGlobalBounds().left-(sprite.getGlobalBounds().width/2) )+ projectile.spos.x
+                                                       ,sprite.getGlobalBounds().top+projectile.spos.y));
         }
         else
         {
-            projectilee.sprite.setPosition(sf::Vector2f(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width - 20,
-                                                   sprite.getGlobalBounds().top + sprite.getGlobalBounds().height/2 - 20));
-            projectilee.startx = sprite.getGlobalBounds().left + sprite.getGlobalBounds().width - 20;
+            projectile.sprite.setPosition(sf::Vector2f((sprite.getGlobalBounds().left + (sprite.getGlobalBounds().width / 2)) - projectile.spos.x
+                                                       ,sprite.getGlobalBounds().top+projectile.spos.y));
         }
-        return projectilee;
+        projectile.startx = projectile.sprite.getGlobalBounds().left;
+        attackList->addAttack(projectile);
     }
 }
 

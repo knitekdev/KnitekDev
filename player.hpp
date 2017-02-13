@@ -43,7 +43,7 @@ public:
     void makeMove(bool collision);
     sf::FloatRect getRect();
     void getHit(const int& ammout);
-    Projectile pushAttack();
+    void pushAttack();
 
 };
 #endif // PLAYER_HPP

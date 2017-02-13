@@ -12,7 +12,7 @@ Game::Game()
 {
     this->loadTextures();
 
-    this->window.create(sf::VideoMode(1280,720), "KnitekDev1");
+    this->window.create(sf::VideoMode(1280,720), "Wooden Head Fighter");
     this->window.setFramerateLimit(60);
 
     this->background.setTexture(this->texmgr.getRef("background"));

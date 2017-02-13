@@ -20,13 +20,10 @@ GameStatePlayGame::GameStatePlayGame(Game* game)
     pos *= 0.5f;
     this->guiView.setCenter(pos);
     this->gameView.setCenter(pos);
-    this->loadTextures();
-    this->loadLevel(1);
+    this->loadlevelNumber();
+    this->loadLevel();
 }
 
-void GameStatePlayGame::loadTextures()
-{
-}
 
 void GameStatePlayGame::draw(const float dt)
 {
@@ -38,6 +35,7 @@ void GameStatePlayGame::draw(const float dt)
 
     player.draw(this->game->window,dt);
     monsterManager.draw(this->game->window,dt);
+    if(endObiekt.objectType==5)this->game->window.draw(endObiekt.sprite);
 
     this->game->window.setView(guiView);
     player.hpBar.draw(this->game->window);
@@ -51,14 +49,13 @@ void GameStatePlayGame::update(const float dt)
     if(player.sprite.getPosition().y > 730 || player.health<=0)this->game->popState(); //usmiercanie gdy gracz spadnie pod ekran
 
     attackList.update(dt); //aktualizacja wszystkich pociskow
-    levelMap.update(dt);
-    player.update(dt);
-    monsterManager.update(player.sprite.getGlobalBounds().left,dt);
-
+    levelMap.update(dt); //akutlizacja elementow tla
+    player.update(dt); //aktualizacja wszystkiego co zwiazane z postacia gracza
+    monsterManager.update(player.sprite.getGlobalBounds().left,dt); //aktualizacja przeciwnikow
+    checkEnd();
 
     //ruch kamery za graczem
-    if((player.sprite.getGlobalBounds().left + player.sprite.getGlobalBounds().width/2 > this->game->window.getSize().x / 2) &&
-        (player.sprite.getGlobalBounds().left < 5000))
+    if((player.sprite.getGlobalBounds().left + player.sprite.getGlobalBounds().width/2 > this->game->window.getSize().x / 2))
     this->gameView.setCenter(sf::Vector2f(player.sprite.getGlobalBounds().left + player.sprite.getGlobalBounds().width/2,
                                     this->game->window.getSize().y/2));
     return;
@@ -94,7 +91,7 @@ void GameStatePlayGame::handleInput()
                 else if(event.key.code == sf::Keyboard::D || event.key.code == sf::Keyboard::Right) player.turn(RIGHT);
                 else if(event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::Up) player.jump();
                 else if(event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::Down) player.sprite.move(0,1);
-                else if(event.key.code == sf::Keyboard::Space) attackList.addAttack(player.pushAttack());
+                else if(event.key.code == sf::Keyboard::Space) player.pushAttack();
                 else if(event.key.code == sf::Keyboard::J) player.getHit(2);
 
                 if(event.key.code == sf::Keyboard::Escape) this->game->popState();
@@ -114,14 +111,53 @@ void GameStatePlayGame::handleInput()
     return;
 }
 
-void GameStatePlayGame::loadLevel(const unsigned int number)
+void GameStatePlayGame::loadlevelNumber()
 {
-    std::string nr = std::to_string(number);
+    std::fstream plik;
+    std::string name = "data\\level\\save.dat";
+    plik.open(name,std::ios::in);
+    unsigned int number;
+    plik>>number;
+    plik.close();
+    if(number>=0 && number<=99)
+    {
+        levelnumber=number;
+        return;
+    }
+    else
+    {
+        plik.open(name,std::ios::out | std::ios::trunc);
+        plik<<0;
+        plik.close();
+        levelnumber=0;
+        return;
+    }
+}
+
+void GameStatePlayGame::checkEnd()
+{
+    if(endObiekt.objectType==5)
+        if(monsterManager.monsters.empty())
+            if(player.sprite.getGlobalBounds().intersects(endObiekt.sprite.getGlobalBounds()))
+            {
+                std::cout<<"kupa";
+                levelnumber++;
+                std::fstream plik;
+                plik.open("data\\level\\save.dat",std::ios::out | std::ios::trunc);
+                plik<<levelnumber;
+                plik.close();
+                this->game->popState();
+            }
+}
+
+void GameStatePlayGame::loadLevel()
+{
+    std::string nr = std::to_string(levelnumber);
     std::string tmp;
     std::fstream plik;
     std::string name = "data\\level\\textures_level_"+nr+".dat";
     plik.open(name,std::ios::in);
-    name = "data\\textures\\level"+nr+"\\";
+    name = "data\\textures\\";
     std::string cos;
     while(getline(plik,tmp))
     {
@@ -155,12 +191,19 @@ void GameStatePlayGame::loadLevel(const unsigned int number)
         if(animationnumber == 0)animations.push_back(Animation(0,0,1.0f));
         plik>>type;
         plik>>variant;
-        levelMap.addObject(Object(sf::Vector2f((float)x,(float)y),width,height,texmgr.getRef(tmp),animations,(ObjectType)type,variant));
-        if(type==PLATFORM)levelMap.addPlatform(sf::FloatRect(sf::Vector2f(x,y),sf::Vector2f(width,height)));
+
+        if(type!=5)
+        {
+            levelMap.addObject(Object(sf::Vector2f((float)x,(float)y),width,height,texmgr.getRef(tmp),animations,(ObjectType)type,variant));
+            if(type==PLATFORM)levelMap.addPlatform(sf::FloatRect(sf::Vector2f(x,y),sf::Vector2f(width,height)));
+        }
+        else
+        {
+            endObiekt = Object(sf::Vector2f((float)x,(float)y),width,height,texmgr.getRef(tmp),animations,(ObjectType)type,variant);
+        }
     }
     plik.close();
 
     player.load(nr,texmgr,&levelMap,&attackList);
     monsterManager.load(nr,texmgr,&levelMap,&attackList);
-
 }

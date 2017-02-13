@@ -3,13 +3,16 @@
 bool Projectile::checkrange()
 {
     if(sprite.getGlobalBounds().left - startx > range)return true;
-    else if(sprite.getGlobalBounds().left - startx < (range * -1)) return true;
-    else return false;
+    if(sprite.getGlobalBounds().left - startx < (range * -1)) return true;
+    if(velocity.x==0)
+        if(sprite.getGlobalBounds().top - starty > range) return true;
+    return false;
 }
 void Projectile::moveSprite(const float dt)
 {
-    float gravity = sprite.getGlobalBounds().left - startx;
+    float gravity = (sprite.getGlobalBounds().left - startx)*dt;
     if(gravity<0) gravity *= -1;
+    if(velocity.x==0)gravity=1;
     sprite.move(sf::Vector2f(velocity.x * dt, velocity.y * dt * gravity));
 }
 
@@ -22,6 +25,7 @@ void Attack::addAttack(const Projectile& pro)
 {
     attacks.push_back(pro);
 }
+
 
 
 void Attack::update(const float dt)
@@ -67,8 +71,9 @@ int Attack::check(sf::FloatRect playerRect, int ofiara)
             if(playerRect.intersects(attacks[i].sprite.getGlobalBounds()))
                 if(attacks[i].owner != ofiara)
                 {
+                    int smieszek = attacks[i].damage;
                     attacks.erase(attacks.begin()+i);
-                    return attacks[i].damage;
+                    return smieszek;
                 }
         }
     }

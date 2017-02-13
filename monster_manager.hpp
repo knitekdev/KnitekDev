@@ -28,7 +28,7 @@ public:
     int monsterType;
 
     Monster(){}
-    Monster(const int health, const sf::Vector2f& position, const sf::Texture& texture,const sf::Vector2f& velocity,
+    Monster( const sf::Vector2f& position, const sf::Texture& texture,const int health, const sf::Vector2f& velocity,
             const std::vector<Animation>& animations,const int animVariant, const unsigned int width, const unsigned int height,
             const float viewrange, const float attackspeed, const int monsterType)
     {
@@ -51,7 +51,7 @@ public:
 
     void update(float playerX, const float &dt, Attack *att, LevelMap *levelMap);
     void draw(sf::RenderWindow& window, const float &dt);
-    void getHit(int ammount);
+    void getHit(const int &ammount);
 };
 
 

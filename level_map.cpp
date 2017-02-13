@@ -49,7 +49,7 @@ bool LevelMap::monstercollision(sf::Sprite& objectin, sf::Vector2f& velocityin,c
     float x=velocity.x,y=velocity.y;
     bool trigger = false;
 
-    if(objectx.getGlobalBounds().left<0 || objectx.getGlobalBounds().left + objectx.getGlobalBounds().width > 1280)x=0;
+//    if(objectx.getGlobalBounds().left<0 || objectx.getGlobalBounds().left + objectx.getGlobalBounds().width > 1280)x=0;
 
     if(!this->platformList.empty())
     {

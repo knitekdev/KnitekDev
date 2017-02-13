@@ -3,7 +3,6 @@
 #include "game_state_startmenu.hpp"
 #include "game_state_playgame.hpp"
 #include "game_state.hpp"
-#include <string>
 #include "menu_gui.hpp"
 
 
@@ -73,8 +72,8 @@ void GameStateStartMenu::handleInput()
 
                     std::string message = this->guiMenu.check(mousePos);
 
-                    if(message == "new_game") this->loadgame();
-//                    else if(message == "load_game");
+                    if(message == "new_game") this->loadgame(message);
+                    else if(message == "continue") this->loadgame(message);
                     else if(message == "authors" ){this->guiMenu.authors= this->guiMenu.authors ? false : true; break;}
                     else if(message == "exit") this->game->window.close();
                     this->guiMenu.authors = false;
@@ -89,8 +88,16 @@ void GameStateStartMenu::handleInput()
     return;
 }
 
-void GameStateStartMenu::loadgame()
+void GameStateStartMenu::loadgame(std::string msg)
 {
+
+    if(msg=="new_game")
+    {
+        std::fstream plik;
+        plik.open("data\\level\\save.dat",std::ios::out | std::ios::trunc);
+        plik<<0;
+        plik.close();
+    }
     this->game->pushState(new GameStatePlayGame(this->game));
     return;
 }

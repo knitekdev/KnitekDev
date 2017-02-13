@@ -10,6 +10,7 @@ public:
     sf::Vector2f velocity;
     sf::Vector2f spos;
     int startx;
+    int starty;
     int range;
     int damage;
     int owner;
@@ -22,6 +23,7 @@ public:
                    this->spos = position;
                    this->velocity = velocity;
                    this->startx = position.x;
+                   this->starty = position.y;
                    this->range = range;
                    this->damage = damage;
                    this->owner = owner;

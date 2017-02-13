@@ -19,15 +19,18 @@ private:
     TextureManager texmgr;
 
 public:
+    Object endObiekt;
     Player player;
     LevelMap levelMap;
     Attack attackList;
     MonsterManager monsterManager;
+    unsigned int levelnumber;
     virtual void draw(const float dt);
     virtual void update(const float dt);
     virtual void handleInput();
-    void loadTextures();
-    void loadLevel(const unsigned int number);
+    void loadLevel();
+    void loadlevelNumber();
+    void checkEnd();
     GameStatePlayGame(Game* game);
 };
 #endif // GAME_STATE_PLAYGAME_HPP
