@@ -19,10 +19,12 @@ private:
     TextureManager texmgr;
 
 public:
+    float gameSpeed;
     Object endObiekt;
     Player player;
     LevelMap levelMap;
     Attack attackList;
+    HitList hitList;
     MonsterManager monsterManager;
     unsigned int levelnumber;
     virtual void draw(const float dt);

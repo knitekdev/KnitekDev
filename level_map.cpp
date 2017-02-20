@@ -3,7 +3,36 @@
 
 void LevelMap::update(float dt)
 {
+    checkHit();
+}
 
+void LevelMap::checkHit()
+{
+    if(!activeobjectList.empty())
+    {
+        for(unsigned int i=0; i<activeobjectList.size(); i++)
+        {
+            if(activeobjectList[i].animVariant==0)
+            {
+                if(!attackList->attacks.empty())
+                {
+                    for(unsigned int j=0; j<attackList->attacks.size(); j++)
+                    {
+                        if(attackList->attacks[j].sprite.getGlobalBounds().intersects(activeobjectList[i].sprite.getGlobalBounds()))
+                        if(attackList->attacks[j].owner==0)
+                        {
+                            activeobjectList[i].animVariant = 1;
+                            objectList.push_back(hiddenobjectList[i]);
+                            addPlatform(sf::FloatRect(sf::Vector2f(hiddenobjectList[i].sprite.getGlobalBounds().left,
+                                                                   hiddenobjectList[i].sprite.getGlobalBounds().top),
+                                                      sf::Vector2f(hiddenobjectList[i].sprite.getGlobalBounds().width,
+                                                                   hiddenobjectList[i].sprite.getGlobalBounds().height)));
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 bool LevelMap::playercollision(sf::Sprite& objectin, sf::Vector2f& velocityin)
@@ -89,52 +118,11 @@ bool LevelMap::monstercollision(sf::Sprite& objectin, sf::Vector2f& velocityin,c
     return false;
 }
 
-bool LevelMap::collision(sf::Sprite& objectin, sf::Vector2f& velocity)
-{
-    sf::Sprite object = objectin;
-    object.move(velocity);
-
-    if(object.getGlobalBounds().left<0 /*|| object.getGlobalBounds().left + object.getGlobalBounds().width > 1280*/)velocity.x=0;
-
-    if(!this->platformList.empty())
-    for(unsigned int i = 0; i < platformList.size(); i++)
-    {
-        if(platformList.at(i).intersects(object.getGlobalBounds()))
-        {
-            if(velocity.y>=0)
-            {
-                if(platformList.at(i).top < object.getGlobalBounds().top + object.getGlobalBounds().height)
-                {
-
-                    objectin.move(velocity.x,0);
-
-                    if(((platformList.at(i).left < objectin.getGlobalBounds().left + objectin.getGlobalBounds().width) ||
-                        (platformList.at(i).left + platformList.at(i).width > objectin.getGlobalBounds().left))&&
-                        (platformList.at(i).top < objectin.getGlobalBounds().top + objectin.getGlobalBounds().height))
-
-                    {
-                        objectin.move(0,velocity.y);
-                        return true;
-                    }
-                    else
-                    {
-                        velocity.y=0;
-                        return true;
-                    }
-                }
-            }
-        }
-    }
-    objectin.move(velocity);
-    return false;
-}
-
 
 void LevelMap::draw(sf::RenderWindow& window, float dt)
 {
     if(!this->objectList.empty())
     {
-//        window.draw(this->objectList.at(0).sprite);
         for(unsigned int i = 0; i<this->objectList.size(); i++)
         {
             this->objectList.at(i).animHandler.changeAnim(this->objectList.at(i).animVariant);
@@ -143,11 +131,32 @@ void LevelMap::draw(sf::RenderWindow& window, float dt)
             window.draw(this->objectList.at(i).sprite);
         }
     }
+    if(!this->activeobjectList.empty())
+    {
+        for(unsigned int i=0; i<this->activeobjectList.size(); i++)
+        {
+            this->activeobjectList.at(i).animHandler.changeAnim(this->activeobjectList.at(i).animVariant);
+            this->activeobjectList.at(i).animHandler.update(dt);
+            this->activeobjectList.at(i).sprite.setTextureRect(this->activeobjectList.at(i).animHandler.bounds);
+            window.draw(this->activeobjectList.at(i).sprite);
+        }
+    }
 }
 
 void LevelMap::addObject(Object object)
 {
     objectList.push_back(object);
+    return;
+}
+
+void LevelMap::addactiveObject(Object object)
+{
+    activeobjectList.push_back(object);
+    return;
+}
+void LevelMap::addhiddenObject(Object object)
+{
+    hiddenobjectList.push_back(object);
     return;
 }
 

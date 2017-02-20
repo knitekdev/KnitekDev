@@ -4,6 +4,7 @@
 #include "game_state_playgame.hpp"
 #include "game_state.hpp"
 #include "menu_gui.hpp"
+extern otwieranie_linku(const char ser[]);
 
 
 GameStateStartMenu::GameStateStartMenu(Game* game)
@@ -76,6 +77,7 @@ void GameStateStartMenu::handleInput()
                     else if(message == "continue") this->loadgame(message);
                     else if(message == "authors" ){this->guiMenu.authors= this->guiMenu.authors ? false : true; break;}
                     else if(message == "exit") this->game->window.close();
+                    else if(message == "donate")    otwieranie_linku(guiMenu.addres.c_str());
                     this->guiMenu.authors = false;
                 }
                 break;

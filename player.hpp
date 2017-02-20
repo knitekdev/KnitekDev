@@ -12,17 +12,18 @@
 #include "attack.hpp"
 #include "level_map.hpp"
 #include "defines.hpp"
+#include "hit_list.hpp"
 
 class Player
 {
     LevelMap *levelMap;
     Attack *attackList;
+    HitList *hitList;
 public:
 
     PlayerState playerState;
     PlayerState lastplayerState;
     sf::Vector2f velocity;
-    HitList hitList;
     Hp_Bar hpBar;
     Projectile projectile;
     float speed;
@@ -34,7 +35,7 @@ public:
     AnimationHandler animHandler;
     sf::Sprite sprite;
 
-    void load(std::string nr, TextureManager& texmgr, LevelMap *levelMap, Attack *attackList);
+    void load(std::string nr, TextureManager& texmgr, LevelMap *levelMap, Attack *attackList, HitList *hitList);
 
     void update(const float dt);
     void draw(sf::RenderWindow& window,const float dt);

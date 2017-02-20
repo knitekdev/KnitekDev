@@ -18,7 +18,7 @@ public:
     AnimationHandler animHandler;
     PlayerState monsterState;
     Projectile projectile;
-    HitList hitList;
+//    HitList hitList;
     sf::Sprite sprite;
     sf::Vector2f velocity;
     int health;
@@ -51,7 +51,7 @@ public:
 
     void update(float playerX, const float &dt, Attack *att, LevelMap *levelMap);
     void draw(sf::RenderWindow& window, const float &dt);
-    void getHit(const int &ammount);
+    void getHit(const int &ammount,HitList* hitList);
 };
 
 
@@ -61,9 +61,10 @@ public:
     std::vector<Monster> monsters;
     LevelMap* levelMap;
     Attack* att;
+    HitList* hitList;
     void update(float playerX, const float &dt);
     void draw(sf::RenderWindow& window, const float &dt);
-    void load(std::string nr,TextureManager& texmgr, LevelMap* levelMap, Attack* att);
+    void load(std::string nr,TextureManager& texmgr, LevelMap* levelMap, Attack* att, HitList* hitList);
 };
 
 

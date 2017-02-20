@@ -29,7 +29,6 @@ void Player::draw(sf::RenderWindow& window,const float dt)
     this->animHandler.update(dt);
     this->sprite.setTextureRect(this->animHandler.bounds);
     window.draw(this->sprite);
-    hitList.draw(window);
     return;
 }
 
@@ -43,7 +42,7 @@ void Player::update(const float dt)
     //sprawdzanie czy jakis pocisk nie trafi³ gracza
     getHit(attackList->check(sprite.getGlobalBounds(),0) * -1);
 
-    static float turnboost = 6;
+    static float turnboost = 2;
     switch(playerState)
     {
     case STAND:
@@ -67,8 +66,6 @@ void Player::update(const float dt)
         }
     }
     velocity.y +=speed * 2.5f * dt;
-
-    hitList.update(dt);
     hpBar.update(maxhealth,health);
     attSpeedtimer+=dt;
 
@@ -92,11 +89,11 @@ void Player::getHit(const int &ammout)
 //       do zmiany     velocity.x = (velocity.x * -1) + 5;
 
             if(velocity.y>-1)velocity.y += -5;
-            hitList.addHit(sf::Vector2f(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width/2 + ((std::rand()%21)+1)-10,
+            hitList->addHit(sf::Vector2f(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width/2 + ((std::rand()%21)+1)-10,
                                         sprite.getGlobalBounds().top - 5 - ((std::rand()%16)+1)),ammout,sf::Color::Red);
         }
         else
-            hitList.addHit(sf::Vector2f(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width/2 + ((std::rand()%21)+1)-10,
+            hitList->addHit(sf::Vector2f(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width/2 + ((std::rand()%21)+1)-10,
                                         sprite.getGlobalBounds().top - 5 - ((std::rand()%16)+1)),ammout,hp!=health ? sf::Color::Green : sf::Color::Black);
     }
 }
@@ -109,14 +106,15 @@ void Player::pushAttack()
         attSpeedtimer = 0;
         if(lastplayerState == RIGHT && projectile.velocity.x < 0) projectile.velocity.x*=-1;
         if(lastplayerState == LEFT && projectile.velocity.x > 0) projectile.velocity.x*=-1;
+
         if(lastplayerState == LEFT)
         {
-            projectile.sprite.setPosition(sf::Vector2f((sprite.getGlobalBounds().left-(sprite.getGlobalBounds().width/2) )+ projectile.spos.x
+            projectile.sprite.setPosition(sf::Vector2f(sprite.getGlobalBounds().left+ projectile.spos.x
                                                        ,sprite.getGlobalBounds().top+projectile.spos.y));
         }
         else
         {
-            projectile.sprite.setPosition(sf::Vector2f((sprite.getGlobalBounds().left + (sprite.getGlobalBounds().width / 2)) - projectile.spos.x
+            projectile.sprite.setPosition(sf::Vector2f((sprite.getGlobalBounds().left + (sprite.getGlobalBounds().width)) - projectile.spos.x
                                                        ,sprite.getGlobalBounds().top+projectile.spos.y));
         }
         projectile.startx = projectile.sprite.getGlobalBounds().left;
@@ -125,11 +123,12 @@ void Player::pushAttack()
 }
 
 
-void Player::load(std::string nr, TextureManager& texmgr, LevelMap *levelMap, Attack *attackList)
+void Player::load(std::string nr, TextureManager& texmgr, LevelMap *levelMap, Attack *attackList,HitList *hitList)
 {
     srand(time(NULL));
     this->levelMap = levelMap;
     this->attackList = attackList;
+    this->hitList = hitList;
     playerState = STAND;
     std::string name,tmp1,tmp2;
     std::fstream plik;

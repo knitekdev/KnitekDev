@@ -27,6 +27,7 @@ public:
                    this->range = range;
                    this->damage = damage;
                    this->owner = owner;
+                   this->sprite.setOrigin(this->sprite.getGlobalBounds().width/2, this->sprite.getGlobalBounds().height/2);
                }
     bool checkrange();
     void moveSprite(const float dt);

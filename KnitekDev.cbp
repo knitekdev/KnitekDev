@@ -73,6 +73,7 @@
 		<Unit filename="menu_gui.hpp" />
 		<Unit filename="monster_manager.cpp" />
 		<Unit filename="monster_manager.hpp" />
+		<Unit filename="otwieranie_linku.cpp" />
 		<Unit filename="player.cpp" />
 		<Unit filename="player.hpp" />
 		<Unit filename="texture_manager.cpp" />

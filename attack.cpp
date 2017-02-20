@@ -47,6 +47,8 @@ void Attack::update(const float dt)
         for(unsigned int i = 0; i<attacks.size(); i++)
         {
             attacks[i].moveSprite(dt);
+            //attacks[i].sprite.rotate(360*dt*3); //obracanie siê
+
         }
     }
 }

@@ -4,6 +4,7 @@
 #include <vector>
 #include "defines.hpp"
 #include "animation_handler.hpp"
+#include "attack.hpp"
 
 
 enum ObjectType{BACKGROUND,PLATFORM};
@@ -39,11 +40,17 @@ public:
 class LevelMap
 {
 public:
+    Attack *attackList;
     std::vector<Object> objectList;
+    std::vector<Object> activeobjectList;
+    std::vector<Object> hiddenobjectList;
     std::vector<sf::FloatRect> platformList;
     void update(float dt);
+    void checkHit();
     void draw(sf::RenderWindow& window, float dt);
     void addObject(Object object);
+    void addactiveObject(Object object);
+    void addhiddenObject(Object object);
     void addPlatform(sf::FloatRect platform);
     bool collision(sf::Sprite& objectin,sf::Vector2f& velocity);
     bool monstercollision(sf::Sprite& objectin, sf::Vector2f& velocityin, const float &dt, PlayerState &monsterState);

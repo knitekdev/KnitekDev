@@ -1,10 +1,11 @@
 #include "monster_manager.hpp"
 
-void Monster::getHit(const int &ammount)
+void Monster::getHit(const int& ammount,HitList* hitList)
 {
     if(ammount!=0)
     {
-        hitList.addHit(sf::Vector2f(sprite.getGlobalBounds().left+5,sprite.getGlobalBounds().top-1),-ammount,sf::Color::Red);
+        hitList->addHit(sf::Vector2f(sprite.getGlobalBounds().left+5,sprite.getGlobalBounds().top-1),
+                        (health-ammount<0)?(-(ammount-health)):(-(ammount)),sf::Color::Red);
         health-=ammount;
     }
 }
@@ -72,7 +73,6 @@ void Monster::update(float playerX, const float &dt, Attack *att, LevelMap *leve
             att->addAttack(projectile);
         }
     }
-    hitList.update(dt);
 }
 
 void Monster::draw(sf::RenderWindow& window, const float &dt)
@@ -81,7 +81,7 @@ void Monster::draw(sf::RenderWindow& window, const float &dt)
     this->animHandler.update(dt);
     this->sprite.setTextureRect(this->animHandler.bounds);
     window.draw(this->sprite);
-    hitList.draw(window);
+
 }
 
 
@@ -115,16 +115,17 @@ void MonsterManager::update(float playerX, const float &dt)
     {
         for(unsigned int i=0; i<monsters.size(); i++)
         {
-            monsters[i].getHit(att->check(monsters[i].sprite.getGlobalBounds(),1));
+            monsters[i].getHit(att->check(monsters[i].sprite.getGlobalBounds(),1),hitList);
             monsters[i].update(playerX,dt,att,levelMap);
         }
     }
 }
 
-void MonsterManager::load(std::string nr, TextureManager& texmgr, LevelMap* levelMap, Attack* att)
+void MonsterManager::load(std::string nr, TextureManager& texmgr, LevelMap* levelMap, Attack* att, HitList* hitList)
 {
     this->att = att;
     this->levelMap = levelMap;
+    this->hitList = hitList;
     std::fstream plik;
     std::string name="data\\level\\monsters_level_"+nr+".dat";
     std::string texname;

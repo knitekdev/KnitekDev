@@ -17,10 +17,11 @@ public:
 };
 
 class GuiMenu : public sf::Transformable, public sf::Drawable
-{
+{//
 public:
     sf::Font font;
     bool authors;
+    std::string addres;
     std::vector<Button> buttons;
 
     void start(sf::RenderWindow& window);

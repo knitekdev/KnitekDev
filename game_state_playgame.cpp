@@ -22,6 +22,7 @@ GameStatePlayGame::GameStatePlayGame(Game* game)
     this->gameView.setCenter(pos);
     this->loadlevelNumber();
     this->loadLevel();
+    this->gameSpeed = 1;
 }
 
 
@@ -35,6 +36,7 @@ void GameStatePlayGame::draw(const float dt)
 
     player.draw(this->game->window,dt);
     monsterManager.draw(this->game->window,dt);
+    hitList.draw(this->game->window);
     if(endObiekt.objectType==5)this->game->window.draw(endObiekt.sprite);
 
     this->game->window.setView(guiView);
@@ -53,6 +55,7 @@ void GameStatePlayGame::update(const float dt)
     player.update(dt); //aktualizacja wszystkiego co zwiazane z postacia gracza
     monsterManager.update(player.sprite.getGlobalBounds().left,dt); //aktualizacja przeciwnikow
     checkEnd();
+    hitList.update(dt);
 
     //ruch kamery za graczem
     if((player.sprite.getGlobalBounds().left + player.sprite.getGlobalBounds().width/2 > this->game->window.getSize().x / 2))
@@ -93,6 +96,8 @@ void GameStatePlayGame::handleInput()
                 else if(event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::Down) player.sprite.move(0,1);
                 else if(event.key.code == sf::Keyboard::Space) player.pushAttack();
                 else if(event.key.code == sf::Keyboard::J) player.getHit(2);
+                else if(event.key.code == sf::Keyboard::N) gameSpeed+=0.5f;
+                else if(event.key.code == sf::Keyboard::M) if(gameSpeed>0.5f)gameSpeed-=0.5f;
 
                 if(event.key.code == sf::Keyboard::Escape) this->game->popState();
                 break;
@@ -119,7 +124,7 @@ void GameStatePlayGame::loadlevelNumber()
     unsigned int number;
     plik>>number;
     plik.close();
-    if(number>=0 && number<=99)
+    if(number<=99)
     {
         levelnumber=number;
         return;
@@ -152,6 +157,7 @@ void GameStatePlayGame::checkEnd()
 
 void GameStatePlayGame::loadLevel()
 {
+    levelMap.attackList = &this->attackList;
     std::string nr = std::to_string(levelnumber);
     std::string tmp;
     std::fstream plik;
@@ -192,18 +198,38 @@ void GameStatePlayGame::loadLevel()
         plik>>type;
         plik>>variant;
 
-        if(type!=5)
+        switch(type)
         {
-            levelMap.addObject(Object(sf::Vector2f((float)x,(float)y),width,height,texmgr.getRef(tmp),animations,(ObjectType)type,variant));
-            if(type==PLATFORM)levelMap.addPlatform(sf::FloatRect(sf::Vector2f(x,y),sf::Vector2f(width,height)));
-        }
-        else
-        {
-            endObiekt = Object(sf::Vector2f((float)x,(float)y),width,height,texmgr.getRef(tmp),animations,(ObjectType)type,variant);
-        }
-    }
+        case 0:
+            {
+                levelMap.addObject(Object(sf::Vector2f((float)x,(float)y),width,height,texmgr.getRef(tmp),animations,(ObjectType)type,variant));
+                break;
+            }
+        case 1:
+            {
+                levelMap.addObject(Object(sf::Vector2f((float)x,(float)y),width,height,texmgr.getRef(tmp),animations,(ObjectType)type,variant));
+                levelMap.addPlatform(sf::FloatRect(sf::Vector2f(x,y),sf::Vector2f(width,height)));
+                break;
+            }
+        case 2:
+            {
+                levelMap.addactiveObject(Object(sf::Vector2f((float)x,(float)y),width,height,texmgr.getRef(tmp),animations,(ObjectType)type,variant));
+                break;
+            }
+        case 3:
+            {
+                levelMap.addhiddenObject(Object(sf::Vector2f((float)x,(float)y),width,height,texmgr.getRef(tmp),animations,(ObjectType)type,variant));
+                break;
+            }
+        case 5:
+            {
+                endObiekt = Object(sf::Vector2f((float)x,(float)y),width,height,texmgr.getRef(tmp),animations,(ObjectType)type,variant);
+                break;
+            }
+        }//switch end
+    }//koniec petli wczytujacej
     plik.close();
 
-    player.load(nr,texmgr,&levelMap,&attackList);
-    monsterManager.load(nr,texmgr,&levelMap,&attackList);
+    player.load(nr,texmgr,&levelMap,&attackList,&hitList);
+    monsterManager.load(nr,texmgr,&levelMap,&attackList,&hitList);
 }
