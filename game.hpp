@@ -22,6 +22,7 @@ public:
     void pushState(GameState* state);
     void popState();
     void changeState(GameState* state);
+    void NextLevel();
     GameState* peekState();
 
     void gameLoop();

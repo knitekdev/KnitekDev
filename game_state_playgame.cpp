@@ -40,6 +40,7 @@ void GameStatePlayGame::draw(const float dt)
     if(endObiekt.objectType==5)this->game->window.draw(endObiekt.sprite);
 
     this->game->window.setView(guiView);
+    gameGui.draw(this->game->window);
     player.hpBar.draw(this->game->window);
 
 
@@ -56,6 +57,7 @@ void GameStatePlayGame::update(const float dt)
     monsterManager.update(player.sprite.getGlobalBounds().left,dt); //aktualizacja przeciwnikow
     checkEnd();
     hitList.update(dt);
+    gameGui.update(dt);
 
     //ruch kamery za graczem
     if((player.sprite.getGlobalBounds().left + player.sprite.getGlobalBounds().width/2 > this->game->window.getSize().x / 2))
@@ -93,7 +95,7 @@ void GameStatePlayGame::handleInput()
                 if(event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::Left) player.turn(LEFT);
                 else if(event.key.code == sf::Keyboard::D || event.key.code == sf::Keyboard::Right) player.turn(RIGHT);
                 else if(event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::Up) player.jump();
-                else if(event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::Down) player.sprite.move(0,1);
+                else if(event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::Down) player.moveDown();
                 else if(event.key.code == sf::Keyboard::Space) player.pushAttack();
                 else if(event.key.code == sf::Keyboard::J) player.getHit(2);
                 else if(event.key.code == sf::Keyboard::N) gameSpeed+=0.5f;
@@ -152,6 +154,8 @@ void GameStatePlayGame::checkEnd()
                 plik<<levelnumber;
                 plik.close();
                 this->game->popState();
+                this->game->pushState(new GameStatePlayGame(this->game));
+//                this->game->NextLevel();
             }
 }
 
@@ -232,4 +236,5 @@ void GameStatePlayGame::loadLevel()
 
     player.load(nr,texmgr,&levelMap,&attackList,&hitList);
     monsterManager.load(nr,texmgr,&levelMap,&attackList,&hitList);
+    gameGui.load(this->levelnumber,&monsterManager,texmgr);
 }

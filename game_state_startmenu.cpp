@@ -100,6 +100,8 @@ void GameStateStartMenu::loadgame(std::string msg)
         plik<<0;
         plik.close();
     }
-    this->game->pushState(new GameStatePlayGame(this->game));
+
+        this->game->pushState(new GameStatePlayGame(this->game));
+
     return;
 }

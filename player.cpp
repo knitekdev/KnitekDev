@@ -122,6 +122,13 @@ void Player::pushAttack()
     }
 }
 
+void Player::moveDown()
+{
+    if((sprite.getGlobalBounds().height+sprite.getGlobalBounds().top)<lowesty)
+    {
+        sprite.move(0,1);
+    }
+}
 
 void Player::load(std::string nr, TextureManager& texmgr, LevelMap *levelMap, Attack *attackList,HitList *hitList)
 {
@@ -166,6 +173,7 @@ void Player::load(std::string nr, TextureManager& texmgr, LevelMap *levelMap, At
     animHandler.update(0.0f);
     plik>>tmp1; plik>>x; plik>>y; plik>>x1; plik>>y1; plik>>range; plik>>damage; plik>>owner;
     projectile = Projectile(texmgr.getRef(tmp1),sf::Vector2f(x,y),sf::Vector2f(x1,y1),range,damage,owner);
+    plik>>lowesty;
     plik.close();
 }
 

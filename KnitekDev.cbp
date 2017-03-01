@@ -57,6 +57,8 @@
 		<Unit filename="defines.hpp" />
 		<Unit filename="game.cpp" />
 		<Unit filename="game.hpp" />
+		<Unit filename="game_gui.cpp" />
+		<Unit filename="game_gui.hpp" />
 		<Unit filename="game_state.hpp" />
 		<Unit filename="game_state_playgame.cpp" />
 		<Unit filename="game_state_playgame.hpp" />

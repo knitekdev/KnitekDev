@@ -393,7 +393,7 @@
 	<string>
 	<vector>
 
-1486058194 source:d:\projekty\knitekdev\game.cpp
+1488293500 source:d:\projekty\knitekdev\game.cpp
 	<stack>
 	<SFML/Graphics.hpp>
 	<SFML/System.hpp>
@@ -401,7 +401,7 @@
 	"game_state.hpp"
 	"texture_manager.hpp"
 
-1483336373 d:\projekty\knitekdev\game.hpp
+1488293309 d:\projekty\knitekdev\game.hpp
 	<stack>
 	<SFML/Graphics.hpp>
 	"texture_manager.hpp"
@@ -414,7 +414,7 @@
 1482328673 d:\projekty\knitekdev\game_state.hpp
 	"game.hpp"
 
-1487613923 source:d:\projekty\knitekdev\game_state_playgame.cpp
+1488369835 source:d:\projekty\knitekdev\game_state_playgame.cpp
 	<SFML/Graphics.hpp>
 	"game_state.hpp"
 	"game_state_playgame.hpp"
@@ -424,7 +424,7 @@
 	<fstream>
 	<string>
 
-1487613903 d:\projekty\knitekdev\game_state_playgame.hpp
+1488310713 d:\projekty\knitekdev\game_state_playgame.hpp
 	<SFML/Graphics.hpp>
 	"texture_manager.hpp"
 	"animation_handler.hpp"
@@ -433,6 +433,7 @@
 	"level_map.hpp"
 	"attack.hpp"
 	"monster_manager.hpp"
+	"game_gui.hpp"
 
 1486986081 d:\projekty\knitekdev\game_state_startmenu.hpp
 	<SFML/Graphics.hpp>
@@ -447,7 +448,7 @@
 	<string>
 	"texture_manager.hpp"
 
-1487365348 source:d:\projekty\knitekdev\game_state_startmenu.cpp
+1488312591 source:d:\projekty\knitekdev\game_state_startmenu.cpp
 	<SFML/Graphics.hpp>
 	"game_state_startmenu.hpp"
 	"game_state_playgame.hpp"
@@ -475,13 +476,13 @@
 	<fstream>
 	"menu_gui.hpp"
 
-1487613020 source:d:\projekty\knitekdev\player.cpp
+1488370008 source:d:\projekty\knitekdev\player.cpp
 	<SFML/Graphics.hpp>
 	"player.hpp"
 	<iostream>
 	<cstdlib>
 
-1487613941 d:\projekty\knitekdev\player.hpp
+1488370010 d:\projekty\knitekdev\player.hpp
 	<SFML/Graphics.hpp>
 	<vector>
 	<fstream>
@@ -495,7 +496,7 @@
 	"defines.hpp"
 	"hit_list.hpp"
 
-1487361082 d:\projekty\knitekdev\level_map.hpp
+1488369860 d:\projekty\knitekdev\level_map.hpp
 	<SFML/Graphics.hpp>
 	<vector>
 	"defines.hpp"
@@ -556,4 +557,15 @@
 1487365334 source:d:\projekty\knitekdev\otwieranie_linku.cpp
 	<windows.h>
 	<iostream>
+
+1488368761 d:\projekty\knitekdev\game_gui.hpp
+	<SFML/Graphics.hpp>
+	<fstream>
+	<string>
+	<iostream>
+	"monster_manager.hpp"
+	"texture_manager.hpp"
+
+1488368827 source:d:\projekty\knitekdev\game_gui.cpp
+	"game_gui.hpp"
 

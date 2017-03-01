@@ -23,6 +23,11 @@ void Game::loadTextures()
     texmgr.loadTexture("background","data\\textures\\background.png");
 }
 
+void Game::NextLevel()
+{
+
+}
+
 void Game::pushState(GameState* state)
 {
     this->states.push(state);

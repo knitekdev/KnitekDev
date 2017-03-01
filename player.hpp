@@ -20,7 +20,6 @@ class Player
     Attack *attackList;
     HitList *hitList;
 public:
-
     PlayerState playerState;
     PlayerState lastplayerState;
     sf::Vector2f velocity;
@@ -32,6 +31,7 @@ public:
     float attSpeedtimer;
     int health;
     int maxhealth;
+    float lowesty;
     AnimationHandler animHandler;
     sf::Sprite sprite;
 
@@ -41,6 +41,7 @@ public:
     void draw(sf::RenderWindow& window,const float dt);
     void turn(PlayerState pS);
     void jump();
+    void moveDown();
     void makeMove(bool collision);
     sf::FloatRect getRect();
     void getHit(const int& ammout);

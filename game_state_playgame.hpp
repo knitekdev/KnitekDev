@@ -9,6 +9,7 @@
 #include "level_map.hpp"
 #include "attack.hpp"
 #include "monster_manager.hpp"
+#include "game_gui.hpp"
 
 
 class GameStatePlayGame : public GameState
@@ -26,6 +27,7 @@ public:
     Attack attackList;
     HitList hitList;
     MonsterManager monsterManager;
+    GameGui gameGui;
     unsigned int levelnumber;
     virtual void draw(const float dt);
     virtual void update(const float dt);
