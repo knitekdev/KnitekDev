@@ -10,10 +10,10 @@ bool Projectile::checkrange()
 }
 void Projectile::moveSprite(const float dt)
 {
-    float gravity = (sprite.getGlobalBounds().left - startx)*dt;
+    float gravity = (sprite.getGlobalBounds().left - startx)*dt*0.02;
     if(gravity<0) gravity *= -1;
-    if(velocity.x==0)gravity=1;
-    sprite.move(sf::Vector2f(velocity.x * dt, velocity.y * dt * gravity));
+    if(velocity.x==0)gravity=0.02;
+    sprite.move(sf::Vector2f(velocity.x * dt, velocity.y * gravity));
 }
 
 void Attack::addAttack(const sf::Texture& texture, sf::Vector2f& position, sf::Vector2f velocity, int range, int damage, int owner)

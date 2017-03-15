@@ -1,0 +1,20 @@
+12
+300 75 faleszambatest 3 0 2 0.30 0 2 0.30 0 2 0.30 0 0
+500 40 platform1 0 1 0
+300 40 platform2 0 1 0
+80 40 platform3 0 1 0
+15 40 torch 1 0 2 0.1 0 0
+45 70 wyjsciezkanalow 0 5 0
+80 40 platform3x 0 3 0
+40 40 wajha 2 0 0 0 0 0 0 2 0
+300 40 platform2x 0 3 0
+500 40 platform1x 0 3 0
+40 10 kolce 2 0 0 0 0 0 0 4 0 50 5
+
+15 10 kupmina 2 0 0 0 0 0 0 4 0 1 3
+5
+40 40 rura 15 0 0 0 0 1200 2 3 bobekatt 15 5 0 500 600 1 1
+35 35 bobek 5 -55 150 2 0 1 0.35 0 1 0.35 0 1200 1.75 1 bobekatt 5 5 -420 0 300 1 1
+80 25 kupka 4 -55 150 2 0 1 0.45 0 1 0.45 0 1200 1.25 1 bobekatt 5 5 -500 0 400 1 1
+35 35 bobekfury 8 -55 150 2 0 1 0.35 0 1 0.35 0 700 1.65 2 bobekatt 5 5 -450 0 300 2 1
+80 25 kupkafury 6 -85 150 2 0 1 0.35 0 1 0.35 0 750 1.10 2 bobekatt 5 5 -550 0 350 2 1

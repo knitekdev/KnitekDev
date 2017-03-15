@@ -4,11 +4,13 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <cstdlib>
 #include "animation_handler.hpp"
 #include "player.hpp"
 #include "attack.hpp"
 #include "level_map.hpp"
 #include "hit_list.hpp"
+
 
 
 
@@ -24,6 +26,7 @@ public:
     int health;
     float viewrange;
     float attackspeed;
+    float attackSPD;
     float attacktimer;
     int monsterType;
 
@@ -47,11 +50,13 @@ public:
         this->monsterType = monsterType;
         this->viewrange = viewrange;
         this->attackspeed = attackspeed;
+        this->attackSPD = attackspeed;
     }
 
     void update(float playerX, const float &dt, Attack *att, LevelMap *levelMap);
     void draw(sf::RenderWindow& window, const float &dt);
     void getHit(const int &ammount,HitList* hitList);
+    void makeAttack(Attack *att);
 };
 
 

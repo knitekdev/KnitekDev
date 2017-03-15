@@ -1,6 +1,12 @@
-3
+7
+300 75 faleszambatest 3 0 2 0.30 0 2 0.30 0 2 0.30 0 0
 500 40 platform1 0 1 0
 80 40 platform3 0 1 0
 15 40 torch 1 0 2 0.1 0 0
-1
-40 40 rura 1000 0 0 0 0 1200 2 3 bobekatt 15 5 0 500 600 1 1
+45 70 wyjsciezkanalow 0 5 0
+80 40 platform3x 0 3 0
+40 40 wajha 2 0 0 0 0 0 0 2 0
+3
+40 40 rura 15 0 0 0 0 1200 2 3 bobekatt 15 5 0 500 600 1 1
+35 35 bobek 5 -55 150 2 0 1 0.35 0 1 0.35 0 1200 1.75 1 bobekatt 5 5 -420 0 300 1 1
+35 35 bobekfury 8 -55 150 2 0 1 0.35 0 1 0.35 0 700 1.65 2 bobekatt 5 5 -450 0 300 2 1

@@ -393,7 +393,7 @@
 	<string>
 	<vector>
 
-1488293500 source:d:\projekty\knitekdev\game.cpp
+1489184865 source:d:\projekty\knitekdev\game.cpp
 	<stack>
 	<SFML/Graphics.hpp>
 	<SFML/System.hpp>
@@ -414,7 +414,7 @@
 1482328673 d:\projekty\knitekdev\game_state.hpp
 	"game.hpp"
 
-1488369835 source:d:\projekty\knitekdev\game_state_playgame.cpp
+1489483676 source:d:\projekty\knitekdev\game_state_playgame.cpp
 	<SFML/Graphics.hpp>
 	"game_state.hpp"
 	"game_state_playgame.hpp"
@@ -424,7 +424,7 @@
 	<fstream>
 	<string>
 
-1488310713 d:\projekty\knitekdev\game_state_playgame.hpp
+1489182192 d:\projekty\knitekdev\game_state_playgame.hpp
 	<SFML/Graphics.hpp>
 	"texture_manager.hpp"
 	"animation_handler.hpp"
@@ -476,34 +476,35 @@
 	<fstream>
 	"menu_gui.hpp"
 
-1488370008 source:d:\projekty\knitekdev\player.cpp
+1489182508 source:d:\projekty\knitekdev\player.cpp
 	<SFML/Graphics.hpp>
 	"player.hpp"
 	<iostream>
 	<cstdlib>
 
-1488370010 d:\projekty\knitekdev\player.hpp
+1489182252 d:\projekty\knitekdev\player.hpp
 	<SFML/Graphics.hpp>
 	<vector>
 	<fstream>
 	<string>
+	"level_map.hpp"
 	"texture_manager.hpp"
 	"animation_handler.hpp"
 	"hit_list.hpp"
 	"hp_bar.hpp"
 	"attack.hpp"
-	"level_map.hpp"
 	"defines.hpp"
 	"hit_list.hpp"
 
-1488369860 d:\projekty\knitekdev\level_map.hpp
+1489180431 d:\projekty\knitekdev\level_map.hpp
 	<SFML/Graphics.hpp>
 	<vector>
 	"defines.hpp"
 	"animation_handler.hpp"
 	"attack.hpp"
+	"hit_list.hpp"
 
-1487363372 source:d:\projekty\knitekdev\level_map.cpp
+1489479277 source:d:\projekty\knitekdev\level_map.cpp
 	"level_map.hpp"
 	<iostream>
 
@@ -530,7 +531,7 @@
 	"hp_bar.hpp"
 	<iostream>
 
-1487325892 source:d:\projekty\knitekdev\attack.cpp
+1489185003 source:d:\projekty\knitekdev\attack.cpp
 	"attack.hpp"
 
 1487325766 d:\projekty\knitekdev\attack.hpp
@@ -538,18 +539,19 @@
 	<vector>
 	<iostream>
 
-1487326329 d:\projekty\knitekdev\monster_manager.hpp
+1489480030 d:\projekty\knitekdev\monster_manager.hpp
 	<SFML/Graphics.hpp>
 	<vector>
 	<iostream>
 	<fstream>
+	<cstdlib>
 	"animation_handler.hpp"
 	"player.hpp"
 	"attack.hpp"
 	"level_map.hpp"
 	"hit_list.hpp"
 
-1487326664 source:d:\projekty\knitekdev\monster_manager.cpp
+1489483337 source:d:\projekty\knitekdev\monster_manager.cpp
 	"monster_manager.hpp"
 
 1484253741 d:\projekty\knitekdev\defines.hpp
@@ -558,7 +560,7 @@
 	<windows.h>
 	<iostream>
 
-1488368761 d:\projekty\knitekdev\game_gui.hpp
+1488981309 d:\projekty\knitekdev\game_gui.hpp
 	<SFML/Graphics.hpp>
 	<fstream>
 	<string>
@@ -566,6 +568,6 @@
 	"monster_manager.hpp"
 	"texture_manager.hpp"
 
-1488368827 source:d:\projekty\knitekdev\game_gui.cpp
+1489184157 source:d:\projekty\knitekdev\game_gui.cpp
 	"game_gui.hpp"
 

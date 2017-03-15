@@ -5,12 +5,12 @@
 #include <vector>
 #include <fstream>
 #include <string>
+#include "level_map.hpp"
 #include "texture_manager.hpp"
 #include "animation_handler.hpp"
 #include "hit_list.hpp"
 #include "hp_bar.hpp"
 #include "attack.hpp"
-#include "level_map.hpp"
 #include "defines.hpp"
 #include "hit_list.hpp"
 
@@ -19,7 +19,9 @@ class Player
     LevelMap *levelMap;
     Attack *attackList;
     HitList *hitList;
+
 public:
+    float *gameSpeed;
     PlayerState playerState;
     PlayerState lastplayerState;
     sf::Vector2f velocity;
@@ -32,6 +34,7 @@ public:
     int health;
     int maxhealth;
     float lowesty;
+    bool jump;
     AnimationHandler animHandler;
     sf::Sprite sprite;
 
@@ -40,7 +43,7 @@ public:
     void update(const float dt);
     void draw(sf::RenderWindow& window,const float dt);
     void turn(PlayerState pS);
-    void jump();
+    void make_jump();
     void moveDown();
     void makeMove(bool collision);
     sf::FloatRect getRect();

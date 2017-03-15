@@ -29,8 +29,8 @@ public:
     MonsterManager monsterManager;
     GameGui gameGui;
     unsigned int levelnumber;
-    virtual void draw(const float dt);
-    virtual void update(const float dt);
+    virtual void draw( float dt);
+    virtual void update( float dt);
     virtual void handleInput();
     void loadLevel();
     void loadlevelNumber();

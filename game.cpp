@@ -13,7 +13,7 @@ Game::Game()
     this->loadTextures();
 
     this->window.create(sf::VideoMode(1280,720), "Wooden Head Fighter");
-    this->window.setFramerateLimit(60);
+    this->window.setFramerateLimit(40);
 
     this->background.setTexture(this->texmgr.getRef("background"));
 }

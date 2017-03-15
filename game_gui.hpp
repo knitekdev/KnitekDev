@@ -14,7 +14,8 @@ public:
     MonsterManager *monsterManager;
     sf::Sprite backgr;
     sf::Font font;
-    sf::Text levelTXT, opponentsTXT, levelNumber, opponentsNumber;
+    sf::Text levelTXT, opponentsTXT, levelNumber, opponentsNumber, timer;
+    float time;
     GameGui()
     {
 

@@ -14,13 +14,10 @@ void Player::turn(PlayerState ps)
     this->playerState = ps;
 }
 
-void Player::jump()
+void Player::make_jump()
 {
     if(velocity.y == 0.0f)
-    {
-        velocity.y +=jumpPower;
-    }
-
+    jump=true;
 }
 
 void Player::draw(sf::RenderWindow& window,const float dt)
@@ -42,6 +39,13 @@ void Player::update(const float dt)
     //sprawdzanie czy jakis pocisk nie trafi³ gracza
     getHit(attackList->check(sprite.getGlobalBounds(),0) * -1);
 
+    //skacz
+    if(jump /*&& velocity.y == 0.0f*/)
+    {
+        velocity.y +=jumpPower; //* (*gameSpeed);
+        jump=false;
+    }
+
     static float turnboost = 2;
     switch(playerState)
     {
@@ -53,27 +57,30 @@ void Player::update(const float dt)
     case LEFT:
         {
             if(velocity.x <0)turnboost = 2;
-            if(velocity.x > (speed * -1))velocity.x +=speed * dt * -1 * 1.5f * turnboost;
+            if(velocity.x > (speed * -1))
+                velocity.x +=speed * dt * -1 * 1.5f * turnboost;
+//                velocity.x = speed * dt * -35;
             lastplayerState = LEFT;
             break;
         }
     case RIGHT:
         {
             if(velocity.x >0)turnboost = 2;
-            if(velocity.x < speed)velocity.x +=speed * dt * 1.5f * turnboost;
+            if(velocity.x < speed)
+                velocity.x +=speed * dt * 1.5f * turnboost;
+//                velocity.x = speed * dt * 35;
             lastplayerState = RIGHT;
             break;
         }
     }
-    velocity.y +=speed * 2.5f * dt;
+    velocity.y +=speed * dt * 2.5f;
+//    velocity.y =speed * dt * 35;
     hpBar.update(maxhealth,health);
     attSpeedtimer+=dt;
+    attSpeedtimer+=dt;
 
-//    if(!levelMap->collision(sprite,velocity))
-//    {
-//        sprite.move(velocity);
-//    }
-    levelMap->playercollision(sprite,velocity);
+    levelMap->playercollision(sprite,velocity,dt);
+    getHit(levelMap->playercollisionTRAP(sprite));
 }
 
 void Player::getHit(const int &ammout)
@@ -88,7 +95,8 @@ void Player::getHit(const int &ammout)
         {
 //       do zmiany     velocity.x = (velocity.x * -1) + 5;
 
-            if(velocity.y>-1)velocity.y += -5;
+            if(velocity.y>-1)
+                velocity.y += -350;
             hitList->addHit(sf::Vector2f(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width/2 + ((std::rand()%21)+1)-10,
                                         sprite.getGlobalBounds().top - 5 - ((std::rand()%16)+1)),ammout,sf::Color::Red);
         }
@@ -132,6 +140,7 @@ void Player::moveDown()
 
 void Player::load(std::string nr, TextureManager& texmgr, LevelMap *levelMap, Attack *attackList,HitList *hitList)
 {
+    jump = false;
     srand(time(NULL));
     this->levelMap = levelMap;
     this->attackList = attackList;

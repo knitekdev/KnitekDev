@@ -2,6 +2,7 @@
 
 void GameGui::load(unsigned int levelnumber, MonsterManager* monsterManager, TextureManager &texmgr)
 {
+    time=0;
     this->monsterManager = monsterManager;
     std::fstream plik;
     plik.open("data\\text\\gamegui.dat",std::ios::in);
@@ -36,11 +37,22 @@ void GameGui::load(unsigned int levelnumber, MonsterManager* monsterManager, Tex
     opponentsNumber.setCharacterSize(charsize);
     opponentsNumber.setFillColor(sf::Color::Black);
     opponentsNumber.setPosition(x,y);
+
+    timer.setFont(font);
+    timer.setCharacterSize(charsize);
+    timer.setFillColor(sf::Color::Black);
+    timer.setPosition(x+60,y);
 }
 
 void GameGui::update(float dt)
 {
     opponentsNumber.setString(std::to_string(this->monsterManager->monsters.size()));
+//    time+=dt;
+//    int czas = (int)time;
+//    std::string tm = std::to_string(czas/60) + ":" + std::to_string(czas%60)+ " : " + std::to_string(time);
+
+    std::string tm = "Game Speed x"+std::to_string((int)dt)+"."+std::to_string(((int)(dt*100))%100);
+    timer.setString(tm);
 }
 
 void GameGui::draw(sf::RenderWindow& window)
@@ -50,4 +62,5 @@ void GameGui::draw(sf::RenderWindow& window)
     window.draw(levelNumber);
     window.draw(opponentsNumber);
     window.draw(opponentsTXT);
+    window.draw(timer);
 }

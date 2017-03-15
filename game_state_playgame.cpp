@@ -26,8 +26,9 @@ GameStatePlayGame::GameStatePlayGame(Game* game)
 }
 
 
-void GameStatePlayGame::draw(const float dt)
+void GameStatePlayGame::draw(float dt)
 {
+    dt*=gameSpeed;
     this->game->window.setView(gameView);
     this->game->window.clear(sf::Color(165,200,15));
     levelMap.draw(this->game->window,dt);
@@ -47,8 +48,9 @@ void GameStatePlayGame::draw(const float dt)
     return;
 }
 
-void GameStatePlayGame::update(const float dt)
+void GameStatePlayGame::update(float dt)
 {
+    dt*=gameSpeed;
     if(player.sprite.getPosition().y > 730 || player.health<=0)this->game->popState(); //usmiercanie gdy gracz spadnie pod ekran
 
     attackList.update(dt); //aktualizacja wszystkich pociskow
@@ -57,7 +59,7 @@ void GameStatePlayGame::update(const float dt)
     monsterManager.update(player.sprite.getGlobalBounds().left,dt); //aktualizacja przeciwnikow
     checkEnd();
     hitList.update(dt);
-    gameGui.update(dt);
+    gameGui.update(gameSpeed);
 
     //ruch kamery za graczem
     if((player.sprite.getGlobalBounds().left + player.sprite.getGlobalBounds().width/2 > this->game->window.getSize().x / 2))
@@ -94,12 +96,12 @@ void GameStatePlayGame::handleInput()
             {
                 if(event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::Left) player.turn(LEFT);
                 else if(event.key.code == sf::Keyboard::D || event.key.code == sf::Keyboard::Right) player.turn(RIGHT);
-                else if(event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::Up) player.jump();
+                else if(event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::Up) player.make_jump();
                 else if(event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::Down) player.moveDown();
                 else if(event.key.code == sf::Keyboard::Space) player.pushAttack();
                 else if(event.key.code == sf::Keyboard::J) player.getHit(2);
-                else if(event.key.code == sf::Keyboard::N) gameSpeed+=0.5f;
-                else if(event.key.code == sf::Keyboard::M) if(gameSpeed>0.5f)gameSpeed-=0.5f;
+                else if(event.key.code == sf::Keyboard::Add) {if(gameSpeed<2.0f)gameSpeed+=0.20f;}
+                else if(event.key.code == sf::Keyboard::Subtract) {if(gameSpeed>0.4f)gameSpeed-=0.20f;}
 
                 if(event.key.code == sf::Keyboard::Escape) this->game->popState();
                 break;
@@ -173,12 +175,13 @@ void GameStatePlayGame::loadLevel()
     {
         cos=name+tmp+".png";
         texmgr.loadTexture(tmp,cos);
+//        texmgr.getRef(tmp).setSmooth(true);
     }
     plik.close();
 
     name = "data\\level\\map_level_"+ nr +".dat";
     plik.open(name,std::ios::in);
-    int objectnumber,x,y,width,height,animationnumber,framestart,frameend,type,variant;
+    int objectnumber,x,y,width,height,animationnumber,framestart,frameend,type,variant,hp,damage;
 
     float duration;
     plik>>objectnumber;
@@ -225,6 +228,12 @@ void GameStatePlayGame::loadLevel()
                 levelMap.addhiddenObject(Object(sf::Vector2f((float)x,(float)y),width,height,texmgr.getRef(tmp),animations,(ObjectType)type,variant));
                 break;
             }
+        case 4:
+            {
+                plik>>hp; plik>>damage;
+                levelMap.addtrapObject(ObjectTrap(sf::Vector2f((float)x,(float)y),width,height,texmgr.getRef(tmp),animations,(ObjectType)type,variant,hp,damage));
+                break;
+            }
         case 5:
             {
                 endObiekt = Object(sf::Vector2f((float)x,(float)y),width,height,texmgr.getRef(tmp),animations,(ObjectType)type,variant);
@@ -237,4 +246,5 @@ void GameStatePlayGame::loadLevel()
     player.load(nr,texmgr,&levelMap,&attackList,&hitList);
     monsterManager.load(nr,texmgr,&levelMap,&attackList,&hitList);
     gameGui.load(this->levelnumber,&monsterManager,texmgr);
+    levelMap.hitList = &hitList;
 }
