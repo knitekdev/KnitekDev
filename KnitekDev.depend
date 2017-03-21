@@ -393,7 +393,7 @@
 	<string>
 	<vector>
 
-1489184865 source:d:\projekty\knitekdev\game.cpp
+1489663221 source:d:\projekty\knitekdev\game.cpp
 	<stack>
 	<SFML/Graphics.hpp>
 	<SFML/System.hpp>
@@ -414,7 +414,7 @@
 1482328673 d:\projekty\knitekdev\game_state.hpp
 	"game.hpp"
 
-1489483676 source:d:\projekty\knitekdev\game_state_playgame.cpp
+1490089898 source:d:\projekty\knitekdev\game_state_playgame.cpp
 	<SFML/Graphics.hpp>
 	"game_state.hpp"
 	"game_state_playgame.hpp"
@@ -424,7 +424,7 @@
 	<fstream>
 	<string>
 
-1489182192 d:\projekty\knitekdev\game_state_playgame.hpp
+1490089898 d:\projekty\knitekdev\game_state_playgame.hpp
 	<SFML/Graphics.hpp>
 	"texture_manager.hpp"
 	"animation_handler.hpp"
@@ -434,6 +434,7 @@
 	"attack.hpp"
 	"monster_manager.hpp"
 	"game_gui.hpp"
+	<iostream>
 
 1486986081 d:\projekty\knitekdev\game_state_startmenu.hpp
 	<SFML/Graphics.hpp>
@@ -469,11 +470,12 @@
 	<vector>
 	<string>
 
-1487365415 source:d:\projekty\knitekdev\menu_gui.cpp
+1490006635 source:d:\projekty\knitekdev\menu_gui.cpp
 	<SFML/Graphics.hpp>
 	<vector>
 	<string>
 	<fstream>
+	<cstdlib>
 	"menu_gui.hpp"
 
 1489182508 source:d:\projekty\knitekdev\player.cpp
@@ -570,4 +572,137 @@
 
 1489184157 source:d:\projekty\knitekdev\game_gui.cpp
 	"game_gui.hpp"
+
+1343981697 d:\projekty\knitekdev\ltbl\light\lightsystem.h
+	<SFML/OpenGL.hpp>
+	<SFML/Graphics/RenderWindow.hpp>
+	<SFML/Graphics/RenderTexture.hpp>
+	<SFML/Graphics/Shader.hpp>
+	<LTBL/QuadTree/StaticQuadTree.h>
+	<LTBL/Light/Light.h>
+	<LTBL/Light/EmissiveLight.h>
+	<LTBL/Light/ConvexHull.h>
+	<LTBL/Light/ShadowFin.h>
+	<LTBL/Constructs.h>
+	<unordered_set>
+	<vector>
+
+1470639234 d:\biblioteki\sfml-2.4.1\include\sfml\opengl.hpp
+	<SFML/Config.hpp>
+	<windows.h>
+	<GL/gl.h>
+	<GLES/gl.h>
+	<GLES/glext.h>
+	<GL/gl.h>
+	<OpenGL/gl.h>
+	<OpenGLES/ES1/gl.h>
+	<OpenGLES/ES1/glext.h>
+	<GLES/gl.h>
+	<GLES/glext.h>
+	<GLES2/gl2ext.h>
+
+1343981697 d:\projekty\knitekdev\ltbl\quadtree\staticquadtree.h
+	<LTBL/QuadTree/QuadTree.h>
+
+1343981697 d:\projekty\knitekdev\ltbl\quadtree\quadtree.h
+	<LTBL/QuadTree/QuadTreeNode.h>
+	<LTBL/QuadTree/QuadTreeOccupant.h>
+	<unordered_set>
+	<memory>
+
+1343981697 d:\projekty\knitekdev\ltbl\quadtree\quadtreenode.h
+	<LTBL/Constructs/AABB.h>
+	<LTBL/Constructs/Point2i.h>
+	<LTBL/QuadTree/QuadTreeOccupant.h>
+	<vector>
+	<unordered_set>
+	<memory>
+
+1343981697 d:\projekty\knitekdev\ltbl\constructs\aabb.h
+	<LTBL/Constructs/Vec2f.h>
+
+1343981697 d:\projekty\knitekdev\ltbl\constructs\vec2f.h
+	<iostream>
+
+1343981697 d:\projekty\knitekdev\ltbl\constructs\point2i.h
+
+1343981697 d:\projekty\knitekdev\ltbl\quadtree\quadtreeoccupant.h
+	<LTBL/QuadTree/QuadTreeNode.h>
+	<LTBL/Constructs/AABB.h>
+
+1343981697 d:\projekty\knitekdev\ltbl\light\light.h
+	<SFML/OpenGL.hpp>
+	<SFML/Graphics/RenderTexture.hpp>
+	<SFML/Graphics/RenderWindow.hpp>
+	<LTBL/Constructs.h>
+	<LTBL/QuadTree/QuadTree.h>
+
+1343981697 d:\projekty\knitekdev\ltbl\constructs.h
+	<LTBL/Constructs/Vec2f.h>
+	<LTBL/Constructs/AABB.h>
+	<LTBL/Constructs/Point2i.h>
+	<LTBL/Constructs/Color3f.h>
+
+1343981697 d:\projekty\knitekdev\ltbl\constructs\color3f.h
+
+1343981697 d:\projekty\knitekdev\ltbl\light\emissivelight.h
+	<LTBL/QuadTree/QuadTree.h>
+	<LTBL/Constructs/Color3f.h>
+	<SFML/OpenGL.hpp>
+	<SFML/Graphics/Texture.hpp>
+
+1343981697 d:\projekty\knitekdev\ltbl\light\convexhull.h
+	<SFML/OpenGL.hpp>
+	<LTBL/Constructs.h>
+	<LTBL/QuadTree/QuadTree.h>
+	<vector>
+
+1343981697 d:\projekty\knitekdev\ltbl\light\shadowfin.h
+	<SFML/OpenGL.hpp>
+	<LTBL/Constructs/Vec2f.h>
+
+1471852442 d:\projekty\knitekdev\\ltbl\lighting\lightsystem.h
+	<ltbl/quadtree/DynamicQuadtree.h>
+	<ltbl/lighting/LightPointEmission.h>
+	<ltbl/lighting/LightDirectionEmission.h>
+	<ltbl/lighting/LightShape.h>
+	<unordered_set>
+
+1471852442 d:\projekty\knitekdev\\ltbl\quadtree\dynamicquadtree.h
+	<ltbl/quadtree/Quadtree.h>
+
+1471852442 d:\projekty\knitekdev\\ltbl\quadtree\quadtree.h
+	<ltbl/quadtree/QuadtreeNode.h>
+	<memory>
+	<unordered_set>
+	<list>
+	<mutex>
+	<thread>
+
+1471852442 d:\projekty\knitekdev\\ltbl\quadtree\quadtreenode.h
+	<ltbl/quadtree/QuadtreeOccupant.h>
+	<memory>
+	<array>
+	<unordered_set>
+
+1471852442 d:\projekty\knitekdev\\ltbl\quadtree\quadtreeoccupant.h
+	<SFML/System.hpp>
+	<SFML/Graphics.hpp>
+	<ltbl/Math.h>
+	<memory>
+	<array>
+	<unordered_set>
+
+1471852442 d:\projekty\knitekdev\\ltbl\math.h
+	<SFML/Graphics.hpp>
+
+1471852442 d:\projekty\knitekdev\\ltbl\lighting\lightpointemission.h
+	<ltbl/quadtree/QuadtreeOccupant.h>
+
+1471852442 d:\projekty\knitekdev\\ltbl\lighting\lightdirectionemission.h
+	<SFML/Graphics.hpp>
+	<ltbl/quadtree/QuadtreeOccupant.h>
+
+1471852442 d:\projekty\knitekdev\\ltbl\lighting\lightshape.h
+	<ltbl/quadtree/QuadtreeOccupant.h>
 

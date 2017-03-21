@@ -10,6 +10,7 @@
 #include "attack.hpp"
 #include "monster_manager.hpp"
 #include "game_gui.hpp"
+#include <iostream>
 
 
 class GameStatePlayGame : public GameState

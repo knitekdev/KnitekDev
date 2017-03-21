@@ -5,14 +5,14 @@
 
 #include "game.hpp"
 #include "game_state.hpp"
-#include "texture_manager.hpp"
+#include "texture_manager.hpp"//-Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic
 
 
 Game::Game()
 {
     this->loadTextures();
 
-    this->window.create(sf::VideoMode(1280,720), "Wooden Head Fighter");
+    this->window.create(sf::VideoMode(1280,720), "Korek Sewer Worker",sf::Style::Titlebar | sf::Style::Close);
     this->window.setFramerateLimit(40);
 
     this->background.setTexture(this->texmgr.getRef("background"));

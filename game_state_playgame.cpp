@@ -1,5 +1,4 @@
 #include <SFML/Graphics.hpp>
-
 #include "game_state.hpp"
 #include "game_state_playgame.hpp"
 #include "animation_handler.hpp"
@@ -7,7 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-//#include <cstdlib>
+
 
 GameStatePlayGame::GameStatePlayGame(Game* game)
 {
@@ -39,6 +38,7 @@ void GameStatePlayGame::draw(float dt)
     monsterManager.draw(this->game->window,dt);
     hitList.draw(this->game->window);
     if(endObiekt.objectType==5)this->game->window.draw(endObiekt.sprite);
+
 
     this->game->window.setView(guiView);
     gameGui.draw(this->game->window);
@@ -182,6 +182,10 @@ void GameStatePlayGame::loadLevel()
     name = "data\\level\\map_level_"+ nr +".dat";
     plik.open(name,std::ios::in);
     int objectnumber,x,y,width,height,animationnumber,framestart,frameend,type,variant,hp,damage;
+
+
+
+
 
     float duration;
     plik>>objectnumber;
