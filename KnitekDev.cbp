@@ -2,56 +2,61 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="KnitekDev" />
+		<Option title="Korek Sewer Worker" />
 		<Option pch_mode="2" />
-		<Option compiler="mingw_610_32-bit" />
+		<Option compiler="tdm" />
+		<MakeCommands>
+			<Build command="" />
+			<CompileFile command="" />
+			<Clean command="" />
+			<DistClean command="" />
+			<AskRebuildNeeded command="" />
+			<SilentBuild command=" &gt; $(CMD_NULL)" />
+		</MakeCommands>
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/KnitekDev" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/Korek Sewer Worker" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
-				<Option compiler="mingw_610_32-bit" />
+				<Option compiler="tdm" />
 				<Compiler>
-					<Add option="-std=c++11" />
-					<Add option="-Wextra" />
 					<Add option="-g" />
+					<Add directory="../SFML-2.5.1/include" />
+					<Add directory="include" />
 				</Compiler>
+				<ResourceCompiler>
+					<Add directory="../SFML-2.5.1/bin" />
+				</ResourceCompiler>
 				<Linker>
-					<Add option="-static-libstdc++" />
-					<Add option="-static-libgcc" />
-					<Add library="sfml-audio-d" />
 					<Add library="sfml-graphics-d" />
+					<Add library="sfml-audio-d" />
 					<Add library="sfml-window-d" />
 					<Add library="sfml-system-d" />
+					<Add directory="../SFML-2.5.1/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option platforms="Windows;" />
-				<Option output="bin/Release/KnitekDev" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="bin/Release/" />
+				<Option output="bin/Release/Korek Sewer Worker" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="0" />
-				<Option compiler="mingw_610_32-bit" />
+				<Option compiler="tdm" />
+				<Option projectCompilerOptionsRelation="1" />
+				<Option projectLinkerOptionsRelation="1" />
+				<Compiler>
+					<Add option="-std=c++11" />
+					<Add option="-O2" />
+					<Add directory="D:/SFML/SFML-2.4.2/include" />
+					<Add directory="include" />
+				</Compiler>
 				<Linker>
 					<Add option="-static-libstdc++" />
-					<Add option="-static-libgcc" />
-					<Add library="sfml-audio" />
 					<Add library="sfml-graphics" />
 					<Add library="sfml-window" />
 					<Add library="sfml-system" />
+					<Add directory="D:/SFML/SFML-2.4.2/lib" />
 				</Linker>
 			</Target>
 		</Build>
-		<Compiler>
-			<Add option="-std=c++11" />
-			<Add option="-g" />
-			<Add option="-DSFML_STATIC" />
-			<Add directory="D:/Biblioteki/SFML-2.4.1/include" />
-			<Add directory="D:/Projekty/KnitekDev/" />
-		</Compiler>
-		<Linker>
-			<Add directory="D:/Biblioteki/SFML-2.4.1/lib" />
-		</Linker>
 		<Unit filename="animation_handler.cpp" />
 		<Unit filename="animation_handler.hpp" />
 		<Unit filename="attack.cpp" />
@@ -70,6 +75,8 @@
 		<Unit filename="hit_list.hpp" />
 		<Unit filename="hp_bar.cpp" />
 		<Unit filename="hp_bar.hpp" />
+		<Unit filename="include/SoundManager.hpp" />
+		<Unit filename="include/Testing_Tool.hpp" />
 		<Unit filename="level_map.cpp" />
 		<Unit filename="level_map.hpp" />
 		<Unit filename="main.cpp" />
@@ -80,6 +87,8 @@
 		<Unit filename="otwieranie_linku.cpp" />
 		<Unit filename="player.cpp" />
 		<Unit filename="player.hpp" />
+		<Unit filename="src/SoundManager.cpp" />
+		<Unit filename="src/Testing_Tool.cpp" />
 		<Unit filename="texture_manager.cpp" />
 		<Unit filename="texture_manager.hpp" />
 		<Extensions>

@@ -10,16 +10,22 @@
 #include "attack.hpp"
 #include "monster_manager.hpp"
 #include "game_gui.hpp"
+#include "Testing_Tool.hpp"
+#include "SoundManager.hpp"
 #include <iostream>
 
 
 class GameStatePlayGame : public GameState
 {
 private:
+    const float defaultWidth = 1280.0f;
+    const float defaultHeight = 720.0f;
     sf::View gameView;
     sf::View guiView;
     TextureManager texmgr;
-
+    SoundManager soundMgr;
+    bool playerIsMoving;
+    bool updateWhenMove;
 public:
     float gameSpeed;
     Object endObiekt;

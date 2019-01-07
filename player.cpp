@@ -103,6 +103,8 @@ void Player::getHit(const int &ammout)
         else
             hitList->addHit(sf::Vector2f(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width/2 + ((std::rand()%21)+1)-10,
                                         sprite.getGlobalBounds().top - 5 - ((std::rand()%16)+1)),ammout,hp!=health ? sf::Color::Green : sf::Color::Black);
+
+        this->soundHandler.playRandomSound();
     }
 }
 
@@ -138,7 +140,7 @@ void Player::moveDown()
     }
 }
 
-void Player::load(std::string nr, TextureManager& texmgr, LevelMap *levelMap, Attack *attackList,HitList *hitList)
+void Player::load(std::string nr, TextureManager& texmgr, LevelMap *levelMap, Attack *attackList,HitList *hitList, SoundManager& soundMgr)
 {
     jump = false;
     srand(time(NULL));
@@ -184,6 +186,49 @@ void Player::load(std::string nr, TextureManager& texmgr, LevelMap *levelMap, At
     projectile = Projectile(texmgr.getRef(tmp1),sf::Vector2f(x,y),sf::Vector2f(x1,y1),range,damage,owner);
     plik>>lowesty;
     plik.close();
+
+    int soundcount = 3;
+    //plik>>soundcount;
+    std::string soNames[3] = {"okrzyk1","okrzyk2","okrzyk3"};
+    std::vector<Korek_Sound> tmpSounds;
+    for(int i = 0;i<soundcount;i++)
+    {
+        //plik>>tmp1;
+        tmpSounds.push_back(soundMgr.getRef(soNames[i]));
+        //tmpSounds[i].getSound().play();
+        //soundMgr.getRef(tmp1);
+    }
+    this->soundHandler = SoundHandler(tmpSounds,soundcount);
+
 }
+
+
+SoundHandler::SoundHandler()
+{
+    return;
+}
+SoundHandler::SoundHandler(std::vector<Korek_Sound> sounds,int soundCount)
+{
+    //this->sounds = new Korek_Sound[soundCount];
+    //for(int i = 0; i<soundCount; i++)
+     //   this->sounds[i] = sounds[i];
+    this->soundCount = soundCount;
+    this->sounds = sounds;
+    return;
+}
+
+void SoundHandler::playRandomSound()
+{
+    int number = rand() % this->soundCount;
+    sounds[number].play();
+    std::cout<<"sdflk"<<std::endl;
+    return;
+}
+
+SoundHandler::~SoundHandler()
+{
+    sounds.clear();
+}
+
 
 

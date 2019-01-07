@@ -1,0 +1,2 @@
+Biblioteka: SFML-2.4.2
+g++ MinGw 6.1.0

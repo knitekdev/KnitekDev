@@ -2,6 +2,7 @@
 #define PLAYER_HPP
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <vector>
 #include <fstream>
 #include <string>
@@ -13,12 +14,28 @@
 #include "attack.hpp"
 #include "defines.hpp"
 #include "hit_list.hpp"
+#include "SoundManager.hpp"
+
+class SoundHandler
+{
+    public:
+        SoundHandler();
+        SoundHandler(std::vector<Korek_Sound>,int);
+        virtual ~SoundHandler();
+
+        void playRandomSound();
+    private:
+        std::vector<Korek_Sound> sounds;
+        int soundCount;
+};
 
 class Player
 {
+private:
     LevelMap *levelMap;
     Attack *attackList;
     HitList *hitList;
+    SoundHandler soundHandler;
 
 public:
     float *gameSpeed;
@@ -38,7 +55,7 @@ public:
     AnimationHandler animHandler;
     sf::Sprite sprite;
 
-    void load(std::string nr, TextureManager& texmgr, LevelMap *levelMap, Attack *attackList, HitList *hitList);
+    void load(std::string nr, TextureManager& texmgr, LevelMap *levelMap, Attack *attackList, HitList *hitList,SoundManager& soundMgr);
 
     void update(const float dt);
     void draw(sf::RenderWindow& window,const float dt);
@@ -49,6 +66,9 @@ public:
     sf::FloatRect getRect();
     void getHit(const int& ammout);
     void pushAttack();
-
 };
+
+
+
+
 #endif // PLAYER_HPP

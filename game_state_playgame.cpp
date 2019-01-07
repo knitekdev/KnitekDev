@@ -16,12 +16,21 @@ GameStatePlayGame::GameStatePlayGame(Game* game)
     sf::Vector2f pos = sf::Vector2f(this->game->window.getSize());
     this->guiView.setSize(pos);
     this->gameView.setSize(pos);
-    pos *= 0.5f;
-    this->guiView.setCenter(pos);
-    this->gameView.setCenter(pos);
+
     this->loadlevelNumber();
     this->loadLevel();
     this->gameSpeed = 1;
+    this->updateWhenMove = false;
+
+    float xM = (0.5f * ((float)(defaultWidth/pos.x)));
+    float yM = (0.5f * ((float)(defaultHeight/pos.y)));
+    std::cout<<"zoom: "<<((float)(defaultWidth/pos.x))<<std::endl;
+    this->gameView.zoom((float)(defaultWidth/pos.x));
+    this->guiView.zoom((float)(defaultWidth/pos.x));
+    pos.x *= xM;
+    pos.y *= yM;
+    this->guiView.setCenter(pos);
+    this->gameView.setCenter(pos);
 }
 
 
@@ -37,6 +46,7 @@ void GameStatePlayGame::draw(float dt)
     player.draw(this->game->window,dt);
     monsterManager.draw(this->game->window,dt);
     hitList.draw(this->game->window);
+
     if(endObiekt.objectType==5)this->game->window.draw(endObiekt.sprite);
 
 
@@ -44,12 +54,13 @@ void GameStatePlayGame::draw(float dt)
     gameGui.draw(this->game->window);
     player.hpBar.draw(this->game->window);
 
-
     return;
 }
 
 void GameStatePlayGame::update(float dt)
 {
+    if(updateWhenMove)
+        if(!playerIsMoving) return;
     dt*=gameSpeed;
     if(player.sprite.getPosition().y > 730 || player.health<=0)this->game->popState(); //usmiercanie gdy gracz spadnie pod ekran
 
@@ -62,14 +73,31 @@ void GameStatePlayGame::update(float dt)
     gameGui.update(gameSpeed);
 
     //ruch kamery za graczem
-    if((player.sprite.getGlobalBounds().left + player.sprite.getGlobalBounds().width/2 > this->game->window.getSize().x / 2))
-    this->gameView.setCenter(sf::Vector2f(player.sprite.getGlobalBounds().left + player.sprite.getGlobalBounds().width/2,
-                                    this->game->window.getSize().y/2));
+    sf::Vector2f pos = sf::Vector2f(this->game->window.getSize());
+    float xM = (0.5f * ((float)(defaultWidth/pos.x)));
+    float yM = (0.5f * ((float)(defaultHeight/pos.y)));
+    std::cout<<(player.sprite.getGlobalBounds().left + player.sprite.getGlobalBounds().width)<<" > "<<this->game->window.getSize().x*xM<<"/"<<player.sprite.getGlobalBounds().left<<" "<<this->game
+    ->window.getSize().x<<std::endl;
+     if(((player.sprite.getGlobalBounds().left + player.sprite.getGlobalBounds().width) > this->game->window.getSize().x * xM))
+    {
+
+        /*this->gameView.setCenter(sf::Vector2f(player.sprite.getGlobalBounds().left + player.sprite.getGlobalBounds().width*(0.5f * ((float)(defaultWidth/pos.x))),
+                                    this->game->window.getSize().y*(0.5f * ((float)(defaultWidth/pos.y)))));*/
+        pos.y *=yM;
+        //pos.x = (player.sprite.getGlobalBounds().left + player.sprite.getGlobalBounds().width)*(defaultWidth/pos.x);
+        pos.x = (player.sprite.getGlobalBounds().left + (player.sprite.getGlobalBounds().width));
+        //pos.x +=player.sprite.getGlobalBounds().left * 0.5f;
+
+
+        this->gameView.setCenter(pos);
+    }
+
     return;
 }
 
 void GameStatePlayGame::handleInput()
 {
+
     sf::Event event;
     sf::Vector2f mousePos = this->game->window.mapPixelToCoords(sf::Mouse::getPosition(this->game->window));
     while(this->game->window.pollEvent(event))
@@ -94,22 +122,70 @@ void GameStatePlayGame::handleInput()
 //            }
         case sf::Event::KeyPressed:
             {
-                if(event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::Left) player.turn(LEFT);
-                else if(event.key.code == sf::Keyboard::D || event.key.code == sf::Keyboard::Right) player.turn(RIGHT);
-                else if(event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::Up) player.make_jump();
-                else if(event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::Down) player.moveDown();
-                else if(event.key.code == sf::Keyboard::Space) player.pushAttack();
-                else if(event.key.code == sf::Keyboard::J) player.getHit(2);
-                else if(event.key.code == sf::Keyboard::Add) {if(gameSpeed<2.0f)gameSpeed+=0.20f;}
-                else if(event.key.code == sf::Keyboard::Subtract) {if(gameSpeed>0.4f)gameSpeed-=0.20f;}
+                if(event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::Left)
+                {
+                    player.turn(LEFT);
+                    playerIsMoving  = true;
+                }
+                else if(event.key.code == sf::Keyboard::D || event.key.code == sf::Keyboard::Right)
+                {
+                    player.turn(RIGHT);
+                    playerIsMoving  = true;
+                }
+                else if(event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::Up)
+                {
+                    player.make_jump();
+                    playerIsMoving  = true;
+                }
+                else if(event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::Down)
+                {
+                    playerIsMoving  = true;
+                    player.moveDown();
+                }
+                else if(event.key.code == sf::Keyboard::Space)
+                {
+                    player.pushAttack();
+                    soundMgr.getRef("okrzyk1").play();
+                    playerIsMoving  = true;
+                }
+                else if(event.key.code == sf::Keyboard::J)
+                {
+                    player.getHit(2);
+                }
+                else if(event.key.code == sf::Keyboard::Add)
+                {
+                    if(gameSpeed<2.0f)
+                        gameSpeed+=0.20f;
+                }
+                else if(event.key.code == sf::Keyboard::Subtract)
+                {
+                    if(gameSpeed>0.4f)
+                        gameSpeed-=0.20f;
+                }
+                else if(event.key.code == sf::Keyboard::F1)
+                {
+                    updateWhenMove = !updateWhenMove;
+                }
 
                 if(event.key.code == sf::Keyboard::Escape) this->game->popState();
                 break;
             }
         case sf::Event::KeyReleased:
             {
-                if(event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::Left) if(player.playerState == LEFT) player.turn(STAND);
-                if(event.key.code == sf::Keyboard::D || event.key.code == sf::Keyboard::Right) if(player.playerState == RIGHT) player.turn(STAND);
+                if(event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::Left)
+                {
+                    playerIsMoving = false;
+                    if(player.playerState == LEFT)
+                        player.turn(STAND);
+                }
+                if(event.key.code == sf::Keyboard::D || event.key.code == sf::Keyboard::Right)
+                {
+                    playerIsMoving = false;
+                    if(player.playerState == RIGHT)
+                        player.turn(STAND);
+                }
+                if(event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::Space || event.key.code == sf::Keyboard::S)
+                     playerIsMoving = false;
                 break;
             }
         default:
@@ -179,14 +255,17 @@ void GameStatePlayGame::loadLevel()
     }
     plik.close();
 
+    name="data\\sounds\\";
+    plik.open("data\\level\\sounds.dat",std::ios::in);
+    while(getline(plik,tmp))
+    {
+        soundMgr.loadSound(tmp,name+tmp+".wav");
+    }
+    plik.close();
+
     name = "data\\level\\map_level_"+ nr +".dat";
     plik.open(name,std::ios::in);
     int objectnumber,x,y,width,height,animationnumber,framestart,frameend,type,variant,hp,damage;
-
-
-
-
-
     float duration;
     plik>>objectnumber;
     for(int i = 0; i<objectnumber; i++)
@@ -247,7 +326,7 @@ void GameStatePlayGame::loadLevel()
     }//koniec petli wczytujacej
     plik.close();
 
-    player.load(nr,texmgr,&levelMap,&attackList,&hitList);
+    player.load(nr,texmgr,&levelMap,&attackList,&hitList,soundMgr);
     monsterManager.load(nr,texmgr,&levelMap,&attackList,&hitList);
     gameGui.load(this->levelnumber,&monsterManager,texmgr);
     levelMap.hitList = &hitList;
