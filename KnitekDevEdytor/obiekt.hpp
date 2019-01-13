@@ -8,7 +8,10 @@ using namespace std;
 
 class Obiekt
 {
+private:
+
 public:
+    sf::Sprite editSprite;
     string nazwa;
     sf::Sprite sprite;
     string parametry;
@@ -20,6 +23,7 @@ public:
         sprite.setTexture(texture);
         sprite.setPosition((float)x,(float)y);
         sprite.setTextureRect(sf::IntRect(0,0,width,height));
+        editSprite = sprite;
         this->nazwa = nazwa;
         this->parametry = parametry;
         this->type = type;

@@ -4,32 +4,49 @@
 	<Project>
 		<Option title="KnitekDevEdytor" />
 		<Option pch_mode="2" />
-		<Option compiler="mingw_610_32-bit" />
+		<Option compiler="tdm" />
+		<MakeCommands>
+			<Build command="" />
+			<CompileFile command="" />
+			<Clean command="" />
+			<DistClean command="" />
+			<AskRebuildNeeded command="" />
+			<SilentBuild command=" &gt; $(CMD_NULL)" />
+		</MakeCommands>
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/KnitekDevEdytor" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Debug" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
-				<Option compiler="mingw_610_32-bit" />
+				<Option compiler="tdm" />
 				<Compiler>
-					<Add option="-std=c++11" />
 					<Add option="-g" />
+					<Add directory="../../SFML-2.5.1/include" />
+					<Add directory="include" />
+					<Add directory="../KnitekDevEdytor" />
 				</Compiler>
+				<ResourceCompiler>
+					<Add directory="../../SFML-2.5.1/bin" />
+				</ResourceCompiler>
 				<Linker>
 					<Add library="sfml-graphics-d" />
+					<Add library="sfml-audio-d" />
 					<Add library="sfml-window-d" />
 					<Add library="sfml-system-d" />
+					<Add directory="../../SFML-2.5.1/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release">
 				<Option output="bin/Release/KnitekDevEdytor" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
-				<Option compiler="mingw_610_32-bit" />
+				<Option compiler="tdm" />
 				<Option use_console_runner="0" />
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-std=c++11" />
+					<Add directory="../KnitekDevEdytor" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -48,6 +65,8 @@
 		<Linker>
 			<Add directory="D:/Biblioteki/SFML-2.4.1/lib" />
 		</Linker>
+		<Unit filename="Palette.cpp" />
+		<Unit filename="Palette.hpp" />
 		<Unit filename="edytor.cpp" />
 		<Unit filename="edytor.hpp" />
 		<Unit filename="main.cpp" />

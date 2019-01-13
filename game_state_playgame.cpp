@@ -97,11 +97,11 @@ void GameStatePlayGame::update(float dt)
 
 void GameStatePlayGame::handleInput()
 {
-
     sf::Event event;
     sf::Vector2f mousePos = this->game->window.mapPixelToCoords(sf::Mouse::getPosition(this->game->window));
     while(this->game->window.pollEvent(event))
     {
+        player.turn(STAND);
         switch(event.type)
         {
         case sf::Event::Closed:
@@ -120,6 +120,7 @@ void GameStatePlayGame::handleInput()
 //                    float(event.size.height) / float(this->game->background.getTexture()->getSize().y));
 //                break;
 //            }
+
         case sf::Event::KeyPressed:
             {
                 if(event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::Left)

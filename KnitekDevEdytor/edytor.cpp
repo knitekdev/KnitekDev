@@ -11,149 +11,197 @@ void Edytor::run(int nr)
     edytorView.setCenter(window.getSize().x/2,window.getSize().y/2);
     window.setView(edytorView);
     pusty.type = 0;
+
     wskazywanyobiekt = &pusty;
     edit=false;
     editnumber=0;
     ruszanyobiekt=0;
 
-    while(window.isOpen())
+    palette = Palette(nr,texmgr);
+
+    editorLoop();
+    return;
+}
+void Edytor::handleInput()
+{
+    sf::Event event;
+    sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+    sf::Vector2f mousePosWindow = mousePos;
+    mousePos.x+=edytorView.getCenter().x-(window.getSize().x/2);
+    mousePos.y+=edytorView.getCenter().y-(window.getSize().y/2);
+
+    while(window.pollEvent(event))
     {
-        sf::Event event;
-        sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-
-        while(window.pollEvent(event))
+        switch(event.type)
         {
-            switch(event.type)
+        case sf::Event::Closed:
             {
-            case sf::Event::Closed:
-                {
-                    this->window.close();
-                    break;
-                }
+                this->window.close();
+                break;
+            }
 
-            case sf::Event::KeyPressed:
+        case sf::Event::KeyPressed:
+            {
+                if(event.key.code == sf::Keyboard::Right)
+                    this->moveRight = true;
+                else if(event.key.code == sf::Keyboard::Left)
+                    this->moveLeft = true;
+                else if(event.key.code == sf::Keyboard::Space)
+                    this->palette.ChangeState();
+                else if(event.key.code == sf::Keyboard::Escape)
+                    window.close();
+                break;
+            }
+        case sf::Event::KeyReleased:
+            {
+                if(event.key.code == sf::Keyboard::S)
+                zapiszpoziom();
+                else if(event.key.code == sf::Keyboard::D)
                 {
-                    if(event.key.code == sf::Keyboard::Right)
-                        edytorView.move(15,0);
-                    else if(event.key.code == sf::Keyboard::Left)
-                        edytorView.move(-15,0);
-                    else if(event.key.code == sf::Keyboard::Escape)
-                        window.close();
-                    break;
-                }
-            case sf::Event::KeyReleased:
-                {
-                    if(event.key.code == sf::Keyboard::S)
-                    zapiszpoziom();
-                    else if(event.key.code == sf::Keyboard::D)
+                    if(!edit && wskazywanyobiekt->type!=0)
                     {
-                        if(!edit && wskazywanyobiekt->type!=0)
-                        {
-                            mapa.erase(mapa.begin()+ruszanyobiekt);
-                            wskazywanyobiekt = &pusty;
-                        }
+                        mapa.erase(mapa.begin()+ruszanyobiekt);
+                        wskazywanyobiekt = &pusty;
                     }
-                    break;
                 }
-            case sf::Event::MouseButtonPressed:
+                else if(event.key.code == sf::Keyboard::Right)
+                    moveRight = false;
+                else if(event.key.code == sf::Keyboard::Left)
+                    moveLeft = false;
+                break;
+            }
+        case sf::Event::MouseButtonPressed:
+            {
+                if(event.mouseButton.button == sf::Mouse::Left)
                 {
-                    if(event.mouseButton.button == sf::Mouse::Left)
-                    {
-                        if(!edit)
-                        {
-                            if(wskazywanyobiekt->type==0)
-                            {
-                                zlap(mousePos);
-                            }
-                            else
-                            {
-                                wyrownajpos();
-                                Obiekt obj=*wskazywanyobiekt;
-                                mapa.erase(mapa.begin()+ruszanyobiekt);
-                                mapa.push_back(obj);
-                                wskazywanyobiekt = &pusty;
-                            }
-                        }
-                    }
-                    else if(event.mouseButton.button == sf::Mouse::Right)
+                    if(mousePosWindow.x>1180)
                     {
                         if(wskazywanyobiekt->type==0)
                         {
-                            edit=true;
-                            if(!paleta.empty())
-                            {
-                                wskazywanyobiekt = &paleta.front();
-                                editnumber=0;
-                            }
-                        }
-                        else if(edit)
-                        {
-                            wyrownajpos();
-                            mapa.push_back(*wskazywanyobiekt);
-                            wskazywanyobiekt = &pusty;
-                            edit=false;
+                            std::cout<<"mouseX: "<<mousePosWindow.x<<std::endl;
+                            tmpObject = palette.GetObjectRef(mousePosWindow.y/100);
+                            wskazywanyobiekt = &tmpObject;
+                            edit = true;
                         }
                     }
-                    break;
-                }
-            case sf::Event::MouseWheelMoved:
-                {
-                    if(edit)
+                    else if(edit)
                     {
-                        if(event.mouseWheel.delta < 0)
+                        wyrownajpos();
+                        mapa.push_back(*wskazywanyobiekt);
+                        wskazywanyobiekt = &pusty;
+                        edit=false;
+                    }
+                    else
+                    {
+                        if(wskazywanyobiekt->type==0)
                         {
-                            if(editnumber+1<paleta.size())
-                            {
-                                wskazywanyobiekt++;
-                                editnumber++;
-                                wskazywanyobiekt->sprite.setPosition(mousePos);
-                            }
-                            else
-                            {
-                                wskazywanyobiekt = &paleta.front();
-                                editnumber=0;
-                                wskazywanyobiekt->sprite.setPosition(mousePos);
-                            }
+                            zlap(mousePos);
                         }
                         else
                         {
-                            if(!editnumber==0)
-                            {
-                                wskazywanyobiekt--;
-                                editnumber--;
-                                wskazywanyobiekt->sprite.setPosition(mousePos);
-                            }
-                            else
-                            {
-                                wskazywanyobiekt = &paleta.back();
-                                editnumber=paleta.size()-1;
-                                wskazywanyobiekt->sprite.setPosition(mousePos);
-                            }
+                            wyrownajpos();
+                            Obiekt obj=*wskazywanyobiekt;
+                            mapa.erase(mapa.begin()+ruszanyobiekt);
+                            mapa.push_back(obj);
+                            wskazywanyobiekt = &pusty;
                         }
                     }
-                    break;
+
                 }
-            case sf::Event::MouseMoved:
+                /*else if(event.mouseButton.button == sf::Mouse::Right)
                 {
-                    if(!wskazywanyobiekt->type==0)
-                        wskazywanyobiekt->sprite.setPosition(mousePos);
-                    break;
-                }
-            default:
+                    if(wskazywanyobiekt->type==0)
+                    {
+                        edit=true;
+                        if(!paleta.empty())
+                        {
+                            wskazywanyobiekt = &paleta.front();
+                            editnumber=0;
+                        }
+                    }
+                    else if(edit)
+                    {
+                        wyrownajpos();
+                        mapa.push_back(*wskazywanyobiekt);
+                        wskazywanyobiekt = &pusty;
+                        edit=false;
+                    }
+                }*/
                 break;
             }
+        case sf::Event::MouseWheelMoved:
+            {
+                if(event.mouseWheel.delta > 0)
+                {
+                    palette.MoveDown();
+                }
+                else
+                {
+                    palette.MoveUp();
+                }
+                /*if(edit)
+                {
+                    if(event.mouseWheel.delta < 0)
+                    {
+                        if(editnumber+1<paleta.size())
+                        {
+                            wskazywanyobiekt++;
+                            editnumber++;
+                            wskazywanyobiekt->sprite.setPosition(mousePos);
+                        }
+                        else
+                        {
+                            wskazywanyobiekt = &paleta.front();
+                            editnumber=0;
+                            wskazywanyobiekt->sprite.setPosition(mousePos);
+                        }
+                    }
+                    else
+                    {
+                        if(!editnumber==0)
+                        {
+                            wskazywanyobiekt--;
+                            editnumber--;
+                            wskazywanyobiekt->sprite.setPosition(mousePos);
+                        }
+                        else
+                        {
+                            wskazywanyobiekt = &paleta.back();
+                            editnumber=paleta.size()-1;
+                            wskazywanyobiekt->sprite.setPosition(mousePos);
+                        }
+                    }
+                }*/
+                break;
+            }
+        case sf::Event::MouseMoved:
+            {
+                if(!wskazywanyobiekt->type==0)
+                {
+                    wskazywanyobiekt->sprite.setPosition(mousePos);
+                }
+                break;
+            }
+        default:
+            break;
         }
-
-        if(sf::Mouse::getPosition().x < 150)
-            edytorView.move(-10,0);
-        else if(sf::Mouse::getPosition().x > ((int)window.getSize().x - 150))
-            edytorView.move(10,0);
-        draw();
     }
-    return;
+//    if(sf::Mouse::getPosition().x < 150)
+//            edytorView.move(-10,0);
+//        else if(sf::Mouse::getPosition().x > ((int)window.getSize().x - 150))
+//            edytorView.move(10,0);
 }
 
-void Edytor::draw()
+void Edytor::update(float dt)
+{
+    if(this->moveLeft)
+        edytorView.move(dt*-500,0);
+    if(this->moveRight)
+        edytorView.move((dt*500),0);
+    palette.Update(dt);
+}
+
+void Edytor::draw(float dt)
 {
     window.setView(edytorView);
     window.clear(sf::Color(165,200,15));
@@ -166,7 +214,6 @@ void Edytor::draw()
                 window.draw(mapa[i].sprite);
             }
         }
-
         for(unsigned int i=0; i<mapa.size(); i++)
         {
             if(mapa[i].type==2)
@@ -174,6 +221,7 @@ void Edytor::draw()
         }
     }
     if(edit)window.draw(wskazywanyobiekt->sprite);
+    palette.Draw(window);
     window.display();
     return;
 }
@@ -205,7 +253,8 @@ void Edytor::wyrownajpos()
 void Edytor::loadtextures()
 {
     fstream plik;
-    string name="data\\level\\textures_level_"+to_string(nr)+".dat";
+    //string name="data\\level\\textures_level_"+to_string(nr)+".dat";
+    string name = "data\\level\\objectsTextures.dat";
     string tmp,cos;
     plik.open(name,ios::in);
     name = "data\\textures\\";
@@ -289,6 +338,20 @@ void Edytor::wczytajpoziom()
     plik.close();
 
 
+}
+
+void Edytor::editorLoop()
+{
+    sf::Clock clock;
+
+    while(this->window.isOpen())
+    {
+        sf::Time elapsed = clock.restart();
+        float dt = elapsed.asSeconds();
+        handleInput();
+        update(dt);
+        draw(dt);
+    }
 }
 
 void Edytor::zapiszpoziom()

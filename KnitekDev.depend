@@ -1476,3 +1476,13 @@
 	<string>
 	"texture_manager.hpp"
 
+1547399696 source:d:\gamedev\knitekdev\game_state_playgame.cpp
+	<SFML/Graphics.hpp>
+	"game_state.hpp"
+	"game_state_playgame.hpp"
+	"animation_handler.hpp"
+	"player.hpp"
+	<iostream>
+	<fstream>
+	<string>
+
